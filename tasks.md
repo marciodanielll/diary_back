@@ -1,0 +1,6 @@
+- [X] Fazer um shell script para iniciar a aplicação
+  - [ ] Deve abrir um shell com a aplicação rodando
+  - [ ] Deve abrir outro shell com o terminal
+- [] Configurar o lint-staged
+- [] Configurar o Husk
+- [] Configurar o commitlint
