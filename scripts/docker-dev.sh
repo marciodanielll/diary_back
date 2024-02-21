@@ -10,5 +10,5 @@ if [ -d "$dir" ]; then
 else
     echo "Install node_modules..."
     docker exec -it diary_web-server npm install
-    docker exec -it diary_web-server npm run start
+    docker exec -it diary_web-server nest start --watch
 fi
