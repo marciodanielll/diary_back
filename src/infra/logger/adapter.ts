@@ -5,7 +5,10 @@ import { ErrorType, MessageType } from './types';
 
 export abstract class ILoggerAdapter<T extends HttpLogger = HttpLogger> {
   abstract logger: T;
-  abstract connect<TLevel = LevelWithSilent>(logLevel?: TLevel): void;
+  abstract connect<TLevel = LevelWithSilent>(
+    logLevel: TLevel,
+    mongoUrl: string,
+  ): void;
   abstract setApplication(app: string): void;
   /**
    * @deprecated The method should be use only in main.ts, this log won't be saved in mongodb, only stdout

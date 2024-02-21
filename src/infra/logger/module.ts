@@ -10,9 +10,9 @@ import { LoggerService } from './service';
   providers: [
     {
       provide: ILoggerAdapter,
-      useFactory: ({ LOGGER_LEVEL }: ISecretsAdapter) => {
+      useFactory: ({ LOGGER_LEVEL, MONGO_URL }: ISecretsAdapter) => {
         const logger = new LoggerService();
-        logger.connect(LOGGER_LEVEL);
+        logger.connect(LOGGER_LEVEL, MONGO_URL);
         return logger;
       },
       inject: [ISecretsAdapter],

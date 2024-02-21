@@ -14,3 +14,24 @@ services:
       - .env
     volumes:
       - ./:/app
+    networks:
+      - diary-network
+    depends_on:
+      - mongo-db
+  mongo-db:
+    image: mongo:latest
+    container_name: diary_mongo-db
+    ports:
+      - "${MONGO_DB_PORT}:${MONGO_DB_PORT}"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - ./data:/data/db
+    networks:
+      - diary-network
+
+
+networks:
+  diary-network:
+    driver: bridge
