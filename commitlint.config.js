@@ -22,6 +22,7 @@ scopes.push(
   'deps',
   'modules',
   'test',
+  'docker',
 );
 
 module.exports = {
