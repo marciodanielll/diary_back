@@ -27,4 +27,8 @@ export class SecretsService implements ISecretsAdapter {
   );
 
   MONGO_URL = `mongodb://${this.MONGO_DB_USER}:${this.MONGO_DB_PASSWORD}@${this.MONGO_DB_HOST}:${this.MONGO_DB_PORT}`;
+
+  TZ = this.configService.get<string>('TZ');
+
+  DATE_FORMAT = this.configService.get<string>('DATE_FORMAT');
 }

@@ -1,4 +1,6 @@
 import { DateTime } from 'luxon';
+import { SecretsService } from '../infra/secrets/service';
+import { ConfigService } from '@nestjs/config';
 
 type GetDateWithFormatFormatInput = {
   date?: Date;
@@ -6,6 +8,9 @@ type GetDateWithFormatFormatInput = {
 };
 
 export class DateUtils {
+  private static readonly secretService = new SecretsService(
+    new ConfigService(),
+  );
   static getDateStringWithFormat(
     input: Partial<GetDateWithFormatFormatInput> = {},
   ): string {
@@ -14,29 +19,29 @@ export class DateUtils {
     }
 
     if (!input?.format) {
-      Object.assign(input, { format: process.env.DATE_FORMAT });
+      Object.assign(input, { format: this.secretService.DATE_FORMAT });
     }
 
     return DateTime.fromJSDate(input.date, { zone: 'utc' })
-      .setZone(process.env.TZ)
+      .setZone(this.secretService.TZ)
       .toFormat(input.format);
   }
 
   static getISODateString(): string {
     return DateTime.fromJSDate(DateUtils.getJSDate(), { zone: 'utc' })
-      .setZone(process.env.TZ)
+      .setZone(this.secretService.TZ)
       .toJSON();
   }
 
   static getJSDate(): Date {
     return DateTime.fromJSDate(DateTime.now().toJSDate(), { zone: 'utc' })
-      .setZone(process.env.TZ)
+      .setZone(this.secretService.TZ)
       .toJSDate();
   }
 
   static getDate(): DateTime {
     return DateTime.fromJSDate(DateUtils.getJSDate(), { zone: 'utc' }).setZone(
-      process.env.TZ,
+      this.secretService.TZ,
     );
   }
 }

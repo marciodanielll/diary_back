@@ -17,6 +17,7 @@ export abstract class ILoggerAdapter<T extends HttpLogger = HttpLogger> {
   /**
    * this log won't be saved in mongodb, only stdout
    */
+
   abstract debug({ message, context, obj }: MessageType): void;
   abstract info({ message, context, obj }: MessageType): void;
   abstract warn({ message, context, obj }: MessageType): void;

@@ -5,7 +5,10 @@ import { ILoggerAdapter } from './infra/logger';
 import { name } from '../package.json';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: false,
+    cors: true,
+  });
 
   const { PORT } = app.get(ISecretsAdapter);
 
@@ -16,7 +19,6 @@ async function bootstrap() {
 
   await app.listen(PORT, () => {
     logger.log(`Server is running on port ${PORT}`);
-    console.log({ trace: process.env.LOGGER_LEVEL });
   });
 }
 
