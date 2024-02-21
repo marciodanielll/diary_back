@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 
-import { SecretsService } from './secrets/service';
+import { SecretsModule } from './secrets/module';
 
 @Module({
-  providers: [SecretsService],
+  imports: [SecretsModule],
 })
 export class InfraModule {}
