@@ -1,23 +1,24 @@
 version: '3.8'
 
 services:
-  web-server:
-    build: 
-      context: .
-      dockerfile: Dockerfile.dev
-    container_name: diary_web-server
-    ports:
-      - "${PORT}:${PORT}"
-    tty: true
-    stdin_open: true
-    env_file:
-      - .env
-    volumes:
-      - ./:/app
-    networks:
-      - diary-network
-    depends_on:
-      - mongo-db
+  # web-server:
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile.dev
+  #   container_name: diary_web-server
+  #   ports:
+  #     - "${PORT}:${PORT}"
+  #   tty: true
+  #   stdin_open: true
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - ./:/app
+  #   networks:
+  #     - diary-network
+  #   depends_on:
+  #     - mongo-db
+  #     - postgres-db
   mongo-db:
     image: mongo:latest
     container_name: diary_mongo-db
@@ -27,10 +28,23 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
-      - ./data:/data/db
+      - ./data-mongo:/data/db
     networks:
       - diary-network
-
+  postgres-db:
+    image: postgres:latest
+    container_name: diary_postgres-db
+    ports:
+      - "${POSTGRES_DB_PORT}:${POSTGRES_DB_PORT}"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+    volumes:
+      - ./data-postgres:/var/lib/postgresql/data
+    networks:
+      - diary-network
 
 networks:
   diary-network:

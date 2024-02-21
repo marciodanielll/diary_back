@@ -23,6 +23,7 @@ scopes.push(
   'modules',
   'test',
   'docker',
+  'global',
 );
 
 module.exports = {
