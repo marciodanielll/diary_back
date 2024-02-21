@@ -12,3 +12,5 @@ services:
     stdin_open: true
     env_file:
       - .env
+    volumes:
+      - ./:/app
