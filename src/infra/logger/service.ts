@@ -28,7 +28,6 @@ export class LoggerService implements ILoggerAdapter {
     logLevel: T,
     mongoUrl: string,
   ): Promise<void> {
-    console.log({ logLevel, mongoUrl });
     const pinoLogger = pino(
       {
         level: [logLevel, 'trace'].find(Boolean).toString(),
