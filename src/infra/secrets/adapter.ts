@@ -7,4 +7,5 @@ export abstract class ISecretsAdapter {
   TZ: string;
   DATE_FORMAT: string;
   POSTGRES_URL: string;
+  NODE_ENV: string;
 }

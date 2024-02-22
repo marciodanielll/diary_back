@@ -47,4 +47,6 @@ export class SecretsService implements ISecretsAdapter {
     this.configService.get<string>('POSTGRES_HOST');
 
   readonly POSTGRES_URL = `postgres://${this.POSTGRES_USER}:${this.POSTGRES_PASSWORD}@${this.POSTGRES_HOST}:${this.POSTGRES_DB_PORT}/${this.POSTGRES_DB}`;
+
+  readonly NODE_ENV = this.configService.get<string>('NODE_ENV');
 }
