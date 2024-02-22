@@ -29,6 +29,22 @@ export class SecretsService implements ISecretsAdapter {
   MONGO_URL = `mongodb://${this.MONGO_DB_USER}:${this.MONGO_DB_PASSWORD}@${this.MONGO_DB_HOST}:${this.MONGO_DB_PORT}`;
 
   TZ = this.configService.get<string>('TZ');
-
   DATE_FORMAT = this.configService.get<string>('DATE_FORMAT');
+
+  private readonly POSTGRES_DB_PORT = Number(
+    this.configService.get<string>('POSTGRES_DB_PORT'),
+  );
+
+  private readonly POSTGRES_USER =
+    this.configService.get<string>('POSTGRES_USER');
+
+  private readonly POSTGRES_PASSWORD =
+    this.configService.get<string>('POSTGRES_PASSWORD');
+
+  private readonly POSTGRES_DB = this.configService.get<string>('POSTGRES_DB');
+
+  private readonly POSTGRES_HOST =
+    this.configService.get<string>('POSTGRES_HOST');
+
+  POSTGRES_URL = `postgres://${this.POSTGRES_USER}:${this.POSTGRES_PASSWORD}@${this.POSTGRES_HOST}:${this.POSTGRES_DB_PORT}/${this.POSTGRES_DB}`;
 }

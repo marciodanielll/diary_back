@@ -4,6 +4,7 @@
     "INITDB",
     "luxon",
     "multistream",
+    "postgres",
     "traceid"
   ]
 }

@@ -6,4 +6,5 @@ export abstract class ISecretsAdapter {
   MONGO_URL: string;
   TZ: string;
   DATE_FORMAT: string;
+  POSTGRES_URL: string;
 }
