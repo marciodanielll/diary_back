@@ -4,7 +4,7 @@ import { HttpLogger } from 'pino-http';
 import { ErrorType, MessageType } from './types';
 
 export abstract class ILoggerAdapter<T extends HttpLogger = HttpLogger> {
-  abstract logger: T;
+  abstract httpLogger: T;
   abstract connect<TLevel = LevelWithSilent>(
     logLevel: TLevel,
     mongoUrl: string,

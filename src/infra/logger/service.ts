@@ -22,13 +22,13 @@ import { ErrorType, MessageType } from './types';
 export class LoggerService implements ILoggerAdapter {
   private app: string;
 
-  logger: HttpLogger;
+  httpLogger: HttpLogger;
 
   async connect<T = LevelWithSilent>(
     logLevel: T,
     mongoUrl: string,
   ): Promise<void> {
-    const pinoLogger = pino(
+    const pinoHttpConfig = pino(
       {
         level: [logLevel, 'trace'].find(Boolean).toString(),
       },
@@ -49,7 +49,8 @@ export class LoggerService implements ILoggerAdapter {
         },
       ]),
     );
-    this.logger = pinoHttp(this.getPinoHttpConfig(pinoLogger));
+
+    this.httpLogger = pinoHttp(this.getPinoHttpConfig(pinoHttpConfig));
   }
 
   setApplication(app: string): void {
@@ -57,26 +58,29 @@ export class LoggerService implements ILoggerAdapter {
   }
 
   setGlobalParameters(input: object): void {
-    this.logger.logger.setBindings(input);
+    this.httpLogger.logger.setBindings(input);
   }
 
   log(message: string): void {
-    this.logger.logger.trace(green(message));
+    this.httpLogger.logger.trace(green(message));
   }
 
   debug({ message, context, obj = {} }: MessageType): void {
     Object.assign(obj, { context, createdAt: DateUtils.getISODateString() });
-    this.logger.logger.trace([obj, gray(message)].find(Boolean), gray(message));
+    this.httpLogger.logger.trace(
+      [obj, gray(message)].find(Boolean),
+      gray(message),
+    );
   }
 
   info({ message, context, obj = {} }: MessageType): void {
     Object.assign(obj, { context, createdAt: DateUtils.getISODateString() });
-    this.logger.logger.info([obj, message].find(Boolean), message);
+    this.httpLogger.logger.info([obj, message].find(Boolean), message);
   }
 
   warn({ message, context, obj = {} }: MessageType): void {
     Object.assign(obj, { context, createdAt: DateUtils.getISODateString() });
-    this.logger.logger.warn([obj, message].find(Boolean), message);
+    this.httpLogger.logger.warn([obj, message].find(Boolean), message);
   }
 
   error(error: ErrorType, message?: string, context?: string): void {
@@ -99,7 +103,7 @@ export class LoggerService implements ILoggerAdapter {
       Boolean,
     );
 
-    this.logger.logger.error(
+    this.httpLogger.logger.error(
       {
         ...response,
         context: error?.context ?? context,
@@ -116,7 +120,7 @@ export class LoggerService implements ILoggerAdapter {
   }
 
   fatal(error: ErrorType, message?: string, context?: string): void {
-    this.logger.logger.fatal(
+    this.httpLogger.logger.fatal(
       {
         message: error.message || message,
         context: error?.context ?? context,
@@ -157,16 +161,18 @@ export class LoggerService implements ILoggerAdapter {
     return {
       logger: pinoLogger,
       quietReqLogger: true,
-      customSuccessMessage: (req: IncomingMessage, res: ServerResponse) => {
+      customSuccessMessage: (_req: IncomingMessage, res: ServerResponse) => {
         return `request ${res.statusCode >= 400 ? 'error' : 'success'} with status code: ${res.statusCode}`;
       },
+
       customErrorMessage: (
-        req: IncomingMessage,
+        _req: IncomingMessage,
         res: ServerResponse,
         error: Error,
       ) => {
         return `request ${error.name} with status code: ${res.statusCode} `;
       },
+
       customAttributeKeys: {
         req: 'request',
         res: 'response',
@@ -174,6 +180,7 @@ export class LoggerService implements ILoggerAdapter {
         responseTime: 'timeTaken',
         reqId: 'traceid',
       },
+
       serializers: {
         err: () => false,
         req: (request) => {
@@ -184,16 +191,15 @@ export class LoggerService implements ILoggerAdapter {
         },
         res: pino.stdSerializers.res,
       },
+
       customProps: (
         req: IncomingMessage & { context: string; protocol: string },
       ): object => {
         const context = req.context;
-
         const traceid = [req?.headers?.traceid, req.id].find(Boolean);
-
         const path = `${req.protocol}://${req.headers.host}${req.url}`;
 
-        this.logger.logger.setBindings({
+        this.httpLogger.logger.setBindings({
           traceid,
           application: this.app,
           context: context,
@@ -209,7 +215,7 @@ export class LoggerService implements ILoggerAdapter {
         };
       },
       customLogLevel: (
-        req: IncomingMessage,
+        _req: IncomingMessage,
         res: ServerResponse,
         error: Error,
       ) => {
@@ -228,6 +234,7 @@ export class LoggerService implements ILoggerAdapter {
 
   private getErrorResponse(error: ErrorType): any {
     const isFunction = typeof error?.getResponse === 'function';
+
     return [
       {
         conditional: typeof error === 'string',
@@ -256,9 +263,10 @@ export class LoggerService implements ILoggerAdapter {
     ].find((c) => c.conditional);
   }
 
-  private getTraceId(error): string {
+  private getTraceId(error: ErrorType): string {
     if (typeof error === 'string') return uuidv4();
-    return [error.traceid, this.logger.logger.bindings()?.traceid].find(
+
+    return [error.traceid, this.httpLogger.logger.bindings()?.traceid].find(
       Boolean,
     );
   }

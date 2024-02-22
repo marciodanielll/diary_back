@@ -10,7 +10,12 @@ import { ISecretsAdapter } from './adapter';
       envFilePath: ['.env'],
     }),
   ],
-  providers: [{ provide: ISecretsAdapter, useClass: SecretsService }],
+  providers: [
+    {
+      provide: ISecretsAdapter,
+      useClass: SecretsService,
+    },
+  ],
   exports: [ISecretsAdapter],
 })
 export class SecretsModule {}

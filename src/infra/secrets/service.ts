@@ -8,9 +8,9 @@ import { LogLevelTuple } from '../logger';
 export class SecretsService implements ISecretsAdapter {
   constructor(private readonly configService: ConfigService) {}
 
-  PORT = Number(this.configService.get<string>('PORT'));
+  readonly PORT = Number(this.configService.get<string>('PORT'));
 
-  LOGGER_LEVEL = this.configService.get<string>(
+  readonly LOGGER_LEVEL = this.configService.get<string>(
     'LOGGER_LEVEL',
   ) as LogLevelTuple[number];
 
@@ -26,9 +26,9 @@ export class SecretsService implements ISecretsAdapter {
     'MONGO_INITDB_ROOT_PASSWORD',
   );
 
-  MONGO_URL = `mongodb://${this.MONGO_DB_USER}:${this.MONGO_DB_PASSWORD}@${this.MONGO_DB_HOST}:${this.MONGO_DB_PORT}`;
+  readonly MONGO_URL = `mongodb://${this.MONGO_DB_USER}:${this.MONGO_DB_PASSWORD}@${this.MONGO_DB_HOST}:${this.MONGO_DB_PORT}`;
 
-  TZ = this.configService.get<string>('TZ');
+  readonly TZ = this.configService.get<string>('TZ');
   DATE_FORMAT = this.configService.get<string>('DATE_FORMAT');
 
   private readonly POSTGRES_DB_PORT = Number(
@@ -46,5 +46,5 @@ export class SecretsService implements ISecretsAdapter {
   private readonly POSTGRES_HOST =
     this.configService.get<string>('POSTGRES_HOST');
 
-  POSTGRES_URL = `postgres://${this.POSTGRES_USER}:${this.POSTGRES_PASSWORD}@${this.POSTGRES_HOST}:${this.POSTGRES_DB_PORT}/${this.POSTGRES_DB}`;
+  readonly POSTGRES_URL = `postgres://${this.POSTGRES_USER}:${this.POSTGRES_PASSWORD}@${this.POSTGRES_HOST}:${this.POSTGRES_DB_PORT}/${this.POSTGRES_DB}`;
 }

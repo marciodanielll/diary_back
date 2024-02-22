@@ -5,6 +5,7 @@
     "luxon",
     "multistream",
     "postgres",
-    "traceid"
+    "traceid",
+    "upserted"
   ]
 }
