@@ -27,6 +27,8 @@ export class LoggerService implements ILoggerAdapter {
   async connect<T = LevelWithSilent>(
     logLevel: T,
     mongoUrl: string,
+    mongoProd: string,
+    nodeEnv: string,
   ): Promise<void> {
     const pinoHttpConfig = pino(
       {
@@ -42,7 +44,7 @@ export class LoggerService implements ILoggerAdapter {
           stream: pino.transport({
             target: 'pino-mongodb',
             options: {
-              uri: mongoUrl,
+              uri: nodeEnv === 'production' ? mongoProd : mongoUrl,
               collection: 'logs',
             },
           }),

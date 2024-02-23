@@ -8,6 +8,8 @@ export abstract class ILoggerAdapter<T extends HttpLogger = HttpLogger> {
   abstract connect<TLevel = LevelWithSilent>(
     logLevel: TLevel,
     mongoUrl: string,
+    mongoProd: string,
+    nodeEnv: string,
   ): void;
   abstract setApplication(app: string): void;
   /**

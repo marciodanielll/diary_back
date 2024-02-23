@@ -17,13 +17,19 @@ export class DatabaseService implements IDatabaseService {
       this.logger = logger;
       this.secretsService = secretsService;
 
-      this.pool = new Pool({
-        user: this.secretsService.POSTGRES_USER,
-        host: this.secretsService.POSTGRES_HOST,
-        database: this.secretsService.POSTGRES_DB,
-        password: this.secretsService.POSTGRES_PASSWORD,
-        port: this.secretsService.POSTGRES_DB_PORT,
-      });
+      if (this.secretsService.NODE_ENV === 'production') {
+        this.pool = new Pool({
+          connectionString: this.secretsService.POSTGRES_PROD,
+        });
+      } else {
+        this.pool = new Pool({
+          user: this.secretsService.POSTGRES_USER,
+          host: this.secretsService.POSTGRES_HOST,
+          database: this.secretsService.POSTGRES_DB,
+          password: this.secretsService.POSTGRES_PASSWORD,
+          port: this.secretsService.POSTGRES_DB_PORT,
+        });
+      }
 
       this.logger.info({
         message: 'Connect with success in postgres',

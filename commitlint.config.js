@@ -24,6 +24,7 @@ scopes.push(
   'test',
   'docker',
   'global',
+  'infra',
 );
 
 module.exports = {
