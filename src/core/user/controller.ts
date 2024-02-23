@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Controller, Post, Get, Req } from '@nestjs/common';
+import { Controller, Post, Req } from '@nestjs/common';
 import { UserCreateUseCase } from './use-cases/user.create';
 import { UserGetAllUseCase } from './use-cases/user.getall';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 
 @Controller('/user')
 @ApiTags('User')
@@ -35,12 +35,7 @@ export class UserController {
       },
     },
   })
-  async create(@Req() req: any) {
+  async create(@Req() req: Request) {
     return await this.userCreateUseCase.execute(req.body);
-  }
-
-  @Get()
-  async getAll() {
-    return await this.userGetAllUseCase.execute();
   }
 }

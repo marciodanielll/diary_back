@@ -12,9 +12,19 @@ import { ISecretsAdapter, SecretsModule } from '@/infra/secrets';
 import { ILoggerAdapter, LoggerModule } from '@/infra/logger';
 import { UserCreateUseCase } from './use-cases/user.create';
 import { UserGetAllUseCase } from './use-cases/user.getall';
+import { CryptoModule, ICryptoAdapter } from '@/libs/crypto';
+import { TokenModule } from '@/libs/token/module';
+import { ITokenAdapter } from '@/libs/token/adapter';
 
 @Module({
-  imports: [DatabaseModule, LoggerModule, SecretsModule],
+  imports: [
+    DatabaseModule,
+    LoggerModule,
+    SecretsModule,
+    CryptoModule,
+    TokenModule,
+    CryptoModule,
+  ],
   controllers: [UserController],
   providers: [
     {
@@ -33,10 +43,18 @@ import { UserGetAllUseCase } from './use-cases/user.getall';
     },
     {
       provide: UserCreateUseCase,
-      useFactory: (userRepository: UserRepository) => {
-        return new UserCreateUseCase(userRepository);
+      useFactory: (
+        userRepository: UserRepository,
+        tokenService: ITokenAdapter,
+        cryptoService: ICryptoAdapter,
+      ) => {
+        return new UserCreateUseCase(
+          userRepository,
+          tokenService,
+          cryptoService,
+        );
       },
-      inject: [UserRepository],
+      inject: [UserRepository, ITokenAdapter, ICryptoAdapter],
     },
     {
       provide: UserGetAllUseCase,

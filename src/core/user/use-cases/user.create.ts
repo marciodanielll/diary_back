@@ -1,5 +1,7 @@
 import { UserRepository } from '../repository/user.repository';
 import { UserEntity } from '../entity/user.entity';
+import { ITokenAdapter } from '@/libs/token/adapter';
+import { ICryptoAdapter } from '@/libs/crypto';
 
 type User = {
   id?: string;
@@ -14,12 +16,21 @@ type User = {
 
 export class UserCreateUseCase {
   private userRepository: UserRepository;
-  constructor(userRepository: UserRepository) {
+  private tokenService: ITokenAdapter;
+  private cryptoService: ICryptoAdapter;
+
+  constructor(
+    userRepository: UserRepository,
+    tokenService: ITokenAdapter,
+    cryptoService: ICryptoAdapter,
+  ) {
     this.userRepository = userRepository;
+    this.tokenService = tokenService;
+    this.cryptoService = cryptoService;
   }
 
-  async execute(data: User): Promise<User> {
-    const newUser = new UserEntity(
+  async execute(data: User): Promise<{ token: string }> {
+    const userEntity = new UserEntity(
       data.name,
       data.email,
       data.password,
@@ -28,8 +39,18 @@ export class UserCreateUseCase {
       data.updatedAt,
       data.isActivated,
     );
-    const user = await this.userRepository.create(newUser.getWithSnakeCase());
 
-    return user as unknown as User;
+    const dataUser = userEntity.getWithSnakeCase();
+
+    const password = await this.cryptoService.createHash(data.password);
+
+    await this.userRepository.create({ ...dataUser, password });
+
+    const token = this.tokenService.createToken({
+      email: data.email,
+      role: data.role,
+    });
+
+    return { token };
   }
 }
