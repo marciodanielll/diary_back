@@ -27,6 +27,15 @@ export class UserRepository {
     return result.rows[0];
   }
 
+  async findByEmail(email: string): Promise<User> {
+    const result = await this.databaseService.query<QueryResultRow>(
+      `SELECT * FROM users WHERE email = $1`,
+      [email],
+    );
+
+    return result.rows[0];
+  }
+
   async findAll(): Promise<User[]> {
     const result = await this.databaseService.query<User & QueryResultRow>(
       `SELECT * FROM users`,

@@ -28,10 +28,6 @@ export class UserController {
           type: 'string',
           example: '123456789888',
         },
-        role: {
-          type: 'string',
-          example: 'admin',
-        },
       },
     },
   })

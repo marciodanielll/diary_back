@@ -11,7 +11,7 @@ type User = {
   createdAt: Date;
   updatedAt: Date;
   isActivated: boolean;
-  role: string;
+  role?: string;
 };
 
 export class UserCreateUseCase {
@@ -34,11 +34,13 @@ export class UserCreateUseCase {
       data.name,
       data.email,
       data.password,
-      data.role,
+      'user',
       data.createdAt,
       data.updatedAt,
       data.isActivated,
     );
+
+    // const isUser = await this.userRepository.findByEmail(data.email);
 
     const dataUser = userEntity.getWithSnakeCase();
 
