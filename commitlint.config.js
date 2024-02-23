@@ -25,6 +25,7 @@ scopes.push(
   'docker',
   'global',
   'infra',
+  'swagger',
 );
 
 module.exports = {
