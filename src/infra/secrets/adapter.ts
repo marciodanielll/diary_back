@@ -18,4 +18,6 @@ export abstract class ISecretsAdapter {
   NODE_ENV: string;
   MONGO_PROD: string;
   POSTGRES_PROD: string;
+  CRYPTO_SECRET: string;
+  CRYPTO_SALT: number;
 }

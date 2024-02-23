@@ -51,4 +51,8 @@ export class SecretsService implements ISecretsAdapter {
   readonly MONGO_PROD = this.configService.get<string>('MONGO_PROD');
 
   readonly POSTGRES_PROD = this.configService.get<string>('POSTGRES_PROD');
+
+  readonly CRYPTO_SECRET = this.configService.get<string>('CRYPTO_SECRET');
+
+  readonly CRYPTO_SALT = Number(this.configService.get<string>('CRYPTO_SALT'));
 }
