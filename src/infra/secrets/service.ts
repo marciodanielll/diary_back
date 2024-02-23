@@ -47,4 +47,8 @@ export class SecretsService implements ISecretsAdapter {
   readonly POSTGRES_HOST = this.configService.get<string>('POSTGRES_HOST');
 
   readonly NODE_ENV = this.configService.get<string>('NODE_ENV');
+
+  readonly MONGO_PROD = this.configService.get<string>('MONGO_PROD');
+
+  readonly POSTGRES_PROD = this.configService.get<string>('POSTGRES_PROD');
 }

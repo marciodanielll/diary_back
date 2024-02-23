@@ -16,4 +16,6 @@ export abstract class ISecretsAdapter {
   POSTGRES_DB: string;
   POSTGRES_HOST: string;
   NODE_ENV: string;
+  MONGO_PROD: string;
+  POSTGRES_PROD: string;
 }
