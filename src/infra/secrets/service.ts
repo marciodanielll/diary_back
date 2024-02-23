@@ -1,3 +1,4 @@
+import { jwtAlgorithms } from './../../libs/token/types';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
@@ -55,4 +56,12 @@ export class SecretsService implements ISecretsAdapter {
   readonly CRYPTO_SECRET = this.configService.get<string>('CRYPTO_SECRET');
 
   readonly CRYPTO_SALT = Number(this.configService.get<string>('CRYPTO_SALT'));
+
+  readonly JWT_SECRET = this.configService.get<string>('JWT_SECRET');
+
+  readonly JWT_ALGORITHM = this.configService.get<string>(
+    'JWT_ALGORITHM',
+  ) as (typeof jwtAlgorithms)[number];
+
+  readonly JWT_EXPIRES_IN = this.configService.get<string>('JWT_EXPIRES_IN');
 }

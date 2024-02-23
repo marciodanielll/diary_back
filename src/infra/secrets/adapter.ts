@@ -1,3 +1,4 @@
+import { jwtAlgorithms } from '@/libs/token/types';
 import { LogLevelTuple } from '../logger/';
 
 export abstract class ISecretsAdapter {
@@ -20,4 +21,7 @@ export abstract class ISecretsAdapter {
   POSTGRES_PROD: string;
   CRYPTO_SECRET: string;
   CRYPTO_SALT: number;
+  JWT_SECRET: string;
+  JWT_ALGORITHM: (typeof jwtAlgorithms)[number];
+  JWT_EXPIRES_IN: string;
 }
