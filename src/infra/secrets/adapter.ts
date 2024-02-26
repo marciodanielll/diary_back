@@ -24,4 +24,8 @@ export abstract class ISecretsAdapter {
   JWT_SECRET: string;
   JWT_ALGORITHM: (typeof jwtAlgorithms)[number];
   JWT_EXPIRES_IN: string;
+  IA_KEY: string;
+  IA_MODEL: string;
+  IA_MAX_TOKENS: number;
+  IA_TEMPERATURE: number;
 }

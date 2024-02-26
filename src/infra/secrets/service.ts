@@ -64,4 +64,13 @@ export class SecretsService implements ISecretsAdapter {
   ) as (typeof jwtAlgorithms)[number];
 
   readonly JWT_EXPIRES_IN = this.configService.get<string>('JWT_EXPIRES_IN');
+
+  readonly IA_KEY = this.configService.get<string>('IA_KEY');
+  readonly IA_MODEL = this.configService.get<string>('IA_MODEL');
+  readonly IA_MAX_TOKENS = Number(
+    this.configService.get<string>('IA_MAX_TOKENS'),
+  );
+  readonly IA_TEMPERATURE = Number(
+    this.configService.get<string>('IA_TEMPERATURE'),
+  );
 }
