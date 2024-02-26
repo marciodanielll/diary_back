@@ -1,5 +1,6 @@
 import { jwtAlgorithms } from '@/libs/token/types';
 import { LogLevelTuple } from '../logger/';
+import { ChatCompletionMessageParam } from 'openai/resources';
 
 export abstract class ISecretsAdapter {
   PORT: number;
@@ -28,4 +29,7 @@ export abstract class ISecretsAdapter {
   IA_MODEL: string;
   IA_MAX_TOKENS: number;
   IA_TEMPERATURE: number;
+  IA_CONTEXT: string;
+  IA_USER: ChatCompletionMessageParam['role'];
+  IA_COMMAND: string;
 }

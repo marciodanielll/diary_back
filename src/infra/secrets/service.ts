@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { ISecretsAdapter } from './adapter';
 import { LogLevelTuple } from '../logger';
+import { ChatCompletionMessageParam } from 'openai/resources';
 
 @Injectable()
 export class SecretsService implements ISecretsAdapter {
@@ -66,11 +67,22 @@ export class SecretsService implements ISecretsAdapter {
   readonly JWT_EXPIRES_IN = this.configService.get<string>('JWT_EXPIRES_IN');
 
   readonly IA_KEY = this.configService.get<string>('IA_KEY');
+
   readonly IA_MODEL = this.configService.get<string>('IA_MODEL');
+
   readonly IA_MAX_TOKENS = Number(
     this.configService.get<string>('IA_MAX_TOKENS'),
   );
+
   readonly IA_TEMPERATURE = Number(
     this.configService.get<string>('IA_TEMPERATURE'),
   );
+
+  readonly IA_CONTEXT = this.configService.get<string>('IA_CONTEXT');
+
+  readonly IA_USER = this.configService.get<string>(
+    'IA_USER',
+  ) as ChatCompletionMessageParam['role'];
+
+  readonly IA_COMMAND = this.configService.get<string>('IA_COMMAND');
 }

@@ -33,6 +33,12 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-explicit-any': 'off',
       }
+    },
+    {
+      files: ['src/libs/ia/service.ts'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+      }
     }
   ],
 };

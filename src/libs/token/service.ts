@@ -36,7 +36,7 @@ export class TokenService implements ITokenAdapter {
 
       return decode;
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error, this.context);
       return error?.message || 'Invalid Token';
     }
   }
