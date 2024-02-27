@@ -1,6 +1,7 @@
 import { jwtAlgorithms } from '@/libs/token/types';
 import { LogLevelTuple } from '../logger/';
 import { ChatCompletionMessageParam } from 'openai/resources';
+import { encodingsTuple } from '@/libs/crypto/types';
 
 export abstract class ISecretsAdapter {
   PORT: number;
@@ -33,4 +34,6 @@ export abstract class ISecretsAdapter {
   IA_USER: ChatCompletionMessageParam['role'];
   IA_COMMAND: string;
   POSTGRES_URL: string;
+  CRYPTO_CIPHER: string;
+  CRYPTO_ENCODING: (typeof encodingsTuple)[number];
 }

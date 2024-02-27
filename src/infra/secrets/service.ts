@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { ISecretsAdapter } from './adapter';
 import { LogLevelTuple } from '../logger';
 import { ChatCompletionMessageParam } from 'openai/resources';
+import { encodingsTuple } from '@/libs/crypto/types';
 
 @Injectable()
 export class SecretsService implements ISecretsAdapter {
@@ -105,4 +106,12 @@ export class SecretsService implements ISecretsAdapter {
   ) as ChatCompletionMessageParam['role'];
 
   readonly IA_COMMAND = this.configService.get<string>('IA_COMMAND') as string;
+
+  readonly CRYPTO_CIPHER = this.configService.get<string>(
+    'CRYPTO_CIPHER',
+  ) as string;
+
+  readonly CRYPTO_ENCODING = this.configService.get<string>(
+    'CRYPTO_ENCODING',
+  ) as (typeof encodingsTuple)[number];
 }
