@@ -4,16 +4,18 @@ import {
   CreateDateColumn,
   Entity,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Diary } from './diary';
 
 enum Role {
   ADMIN = 'admin',
   USER = 'user',
 }
 
-@Entity('users')
+@Entity({ name: 'users' })
 export class User extends BaseEntity {
-  @Column({ primary: true, type: 'uuid' })
+  @Column({ type: 'uuid', primary: true, generated: 'uuid' })
   id: string;
 
   @Column({ type: 'varchar', length: 255 })
@@ -34,6 +36,9 @@ export class User extends BaseEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @Column({ name: 'is_activated' })
+  @Column({ name: 'is_activated', default: true })
   isActivated: boolean;
+
+  @OneToMany(() => Diary, (diary) => diary.user)
+  diaries: Diary[];
 }

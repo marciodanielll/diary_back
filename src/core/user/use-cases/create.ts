@@ -31,7 +31,7 @@ export class UserCreateUseCase {
     const userExist = await this.repository.findOne({ email: data.email });
 
     if (userExist) {
-      throw new ApiBadRequestException('User already exists');
+      throw new ApiBadRequestException('Email já cadastrado.');
     }
 
     userEntity.insertHashPassword(

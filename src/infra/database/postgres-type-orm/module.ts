@@ -3,9 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import path from 'path';
-import { ISecretsAdapter, SecretsModule } from '@/infra/secrets';
 
-const pathEntities = `${path.resolve(__dirname, 'schemas')}/*.{ts}`;
+import { ISecretsAdapter, SecretsModule } from '@/infra/secrets';
 
 @Module({
   imports: [
@@ -15,19 +14,19 @@ const pathEntities = `${path.resolve(__dirname, 'schemas')}/*.{ts}`;
         NODE_ENV,
         POSTGRES_PROD,
       }: ISecretsAdapter) => {
-        console.log(POSTGRES_URL);
         const isLocal = NODE_ENV === 'local';
         return {
           type: 'postgres',
           url: isLocal ? POSTGRES_URL : POSTGRES_PROD,
           timeout: 5000,
           connectTimeout: 5000,
-          logging: isLocal,
+          logging: false,
           autoLoadEntities: true,
           namingStrategy: new SnakeNamingStrategy(),
           synchronize: isLocal,
           migrationsTableName: 'migration_collection',
-          entities: [pathEntities],
+          entities: [path.join(__dirname, '/schemas/*.{ts,js}')],
+          migrations: [path.join(__dirname, '/migrations/*.{ts,js}')],
         };
       },
       async dataSourceFactory(options: DataSourceOptions) {

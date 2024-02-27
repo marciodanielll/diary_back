@@ -6,4 +6,4 @@ else
   migrationName=$1
 fi
 
-npx typeorm migration:create ../src/infra/database/postgres/migrations/$migrationName
+npx typeorm migration:create ../src/infra/database/postgres-type-orm/migrations/$migrationName
