@@ -32,4 +32,5 @@ export abstract class ISecretsAdapter {
   IA_CONTEXT: string;
   IA_USER: ChatCompletionMessageParam['role'];
   IA_COMMAND: string;
+  POSTGRES_URL: string;
 }

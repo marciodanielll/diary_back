@@ -48,7 +48,7 @@ export class IAService implements IAAdapter {
     ${text}
     `;
   }
-  async analyzeTextWithContext(text: string): Promise<string> {
+  async analyzeTextWithContext(text: string): Promise<string | null> {
     const openai = new OpenAI({
       apiKey: this.apiKey,
     });
@@ -66,9 +66,10 @@ export class IAService implements IAAdapter {
         ],
       });
 
-      return response.choices[0].message.content;
+      return response?.choices?.[0]?.message?.content ?? null;
     } catch (error) {
       this.logger.error(error, this.context);
+      return null;
     }
   }
 }

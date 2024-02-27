@@ -22,15 +22,15 @@ export class DateUtils {
       Object.assign(input, { format: this.secretService.DATE_FORMAT });
     }
 
-    return DateTime.fromJSDate(input.date, { zone: 'utc' })
+    return DateTime.fromJSDate(input.date as Date, { zone: 'utc' })
       .setZone(this.secretService.TZ)
-      .toFormat(input.format);
+      .toFormat(input.format as string);
   }
 
   static getISODateString(): string {
     return DateTime.fromJSDate(DateUtils.getJSDate(), { zone: 'utc' })
       .setZone(this.secretService.TZ)
-      .toJSON();
+      .toJSON() as string;
   }
 
   static getJSDate(): Date {

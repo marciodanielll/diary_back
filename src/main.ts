@@ -5,7 +5,7 @@ import { ILoggerAdapter } from './infra/logger';
 import { name } from '../package.json';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-async function bootstrap() {
+(async () => {
   const app = await NestFactory.create(AppModule, {
     cors: true,
   });
@@ -27,6 +27,4 @@ async function bootstrap() {
   await app.listen(PORT, () => {
     logger.log(`Server is running on port ${PORT}`);
   });
-}
-
-bootstrap();
+})();

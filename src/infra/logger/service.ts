@@ -32,7 +32,9 @@ export class LoggerService implements ILoggerAdapter {
   ): Promise<void> {
     const pinoHttpConfig = pino(
       {
-        level: [logLevel, 'trace'].find(Boolean).toString(),
+        level: (
+          [logLevel, 'trace'].find(Boolean) as LevelWithSilent
+        ).toString(),
       },
       multistream([
         {
@@ -143,7 +145,7 @@ export class LoggerService implements ILoggerAdapter {
       levelFirst: true,
       ignore: 'pid,hostname',
       quietReqLogger: true,
-      messageFormat: (log: unknown, messageKey: string) => {
+      messageFormat: (log: Record<string, any>, messageKey: string) => {
         const message = log[String(messageKey)];
         if (this.app) {
           return `[${blue(this.app)}] ${message}`;
