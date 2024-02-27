@@ -22,3 +22,6 @@ export type User = z.infer<typeof userSchema>;
 
 export type UserCreateInput = User;
 export type UserCreateOutput = { token: string };
+
+export type UserLoginInput = Pick<User, 'email' | 'password'>;
+export type UserLoginOutput = { token: string };
