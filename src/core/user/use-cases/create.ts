@@ -1,11 +1,49 @@
+import { ApiBadRequestException } from './../../../utils/exception';
+import { ILoggerAdapter } from '@/infra/logger';
 import { IUserRepository } from '../repository';
-import { User } from '../types';
+import { UserCreateInput, UserCreateOutput } from '../types';
 import { UserEntity } from '../user.entity';
+import { ICryptoAdapter } from '@/libs/crypto';
+import { ITokenAdapter } from '@/libs/token/adapter';
 
 export class UserCreateUseCase {
-  constructor(private userRepository: IUserRepository) {}
-  async execute(data: User) {
-    const user = new UserEntity(data);
-    return this.userRepository.create(user);
+  private readonly repository: IUserRepository;
+  private readonly logger: ILoggerAdapter;
+  private readonly cryptoService: ICryptoAdapter;
+  private readonly tokenService: ITokenAdapter;
+
+  constructor(
+    userRepository: IUserRepository,
+    logger: ILoggerAdapter,
+    cryptoService: ICryptoAdapter,
+    tokenService: ITokenAdapter,
+  ) {
+    this.repository = userRepository;
+    this.logger = logger;
+    this.cryptoService = cryptoService;
+    this.tokenService = tokenService;
+  }
+
+  async execute(data: UserCreateInput): Promise<UserCreateOutput> {
+    const userEntity = new UserEntity(data);
+
+    const userExist = await this.repository.findOne({ email: data.email });
+
+    if (userExist) {
+      throw new ApiBadRequestException('User already exists');
+    }
+
+    userEntity.insertHashPassword(
+      await this.cryptoService.createHash(userEntity.password),
+    );
+
+    await this.repository.create(userEntity);
+
+    const token = this.tokenService.createToken({
+      email: data.email,
+      name: data.name,
+    });
+
+    return { token };
   }
 }

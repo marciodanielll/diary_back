@@ -14,6 +14,7 @@ export class PostgresRepository<T extends Model> implements IRepository<T> {
     saveOptions?: TOptions,
   ): Promise<CreatedModel> {
     const entity = this.repository.create(document);
+
     if (saveOptions !== undefined) {
       const model = await entity.save(saveOptions as SaveOptions);
       return { created: model.hasId(), id: model.id };
@@ -21,6 +22,12 @@ export class PostgresRepository<T extends Model> implements IRepository<T> {
 
     const model = await entity.save();
     return { created: model.hasId(), id: model.id };
+  }
+
+  async findOne<TQuery = Partial<T>>(filter: TQuery): Promise<T | null> {
+    return this.repository.findOne({
+      where: { ...filter, deleted_at: null },
+    } as FindOneOptions<T>);
   }
 
   async find<TQuery = Partial<T>>(filter: TQuery): Promise<T[]> {

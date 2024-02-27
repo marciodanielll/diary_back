@@ -11,6 +11,10 @@ export class UserEntity
   role = Roles.USER;
   isActivated = true;
 
+  insertHashPassword(hash: string): void {
+    this.password = hash;
+  }
+
   constructor(entity: User) {
     super();
     Object.assign(this, this.validate(entity));

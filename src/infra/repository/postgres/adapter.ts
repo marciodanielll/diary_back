@@ -6,6 +6,11 @@ export abstract class IRepository<T> {
     saveOptions?: TOptions,
   ): Promise<CreatedModel>;
 
+  abstract findOne<TQuery = Partial<T>, TOptions = unknown>(
+    filter: TQuery,
+    options?: TOptions | null,
+  ): Promise<T | null>;
+
   abstract find<TQuery = Partial<T>, TOptions = unknown>(
     filter: TQuery,
     options?: TOptions | null,
