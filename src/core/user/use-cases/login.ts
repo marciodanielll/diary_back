@@ -32,6 +32,8 @@ export class UserLoginUseCase {
       throw new ApiBadRequestException('Email ou senha incorretos');
     }
 
+    console.log('userExist', userExist);
+
     const userEntity = new UserEntity(userExist);
 
     const isPasswordMatch = await this.cryptoService.validateHash(

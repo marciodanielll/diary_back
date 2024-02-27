@@ -7,6 +7,7 @@ import { IUserCreateUseCaseAdapter, IUserLoginUseCaseAdapter } from './adapter';
 import { IUserRepository } from '@/core/user/repository';
 import { UserRepositoryProviderModule } from './provider';
 import { UserCreateUseCase } from '@/core/user/use-cases/create';
+import { UserLoginUseCase } from '@/core/user/use-cases/login';
 import { TokenModule } from '@/libs/token/module';
 import { CryptoModule, ICryptoAdapter } from '@/libs/crypto';
 import { ITokenAdapter } from '@/libs/token/adapter';
@@ -46,7 +47,7 @@ import { ITokenAdapter } from '@/libs/token/adapter';
         cryptoService: ICryptoAdapter,
         tokenService: ITokenAdapter,
       ) => {
-        return new UserCreateUseCase(
+        return new UserLoginUseCase(
           repository,
           logger,
           cryptoService,
