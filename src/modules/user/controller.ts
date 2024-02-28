@@ -74,6 +74,10 @@ export class UserController {
           example:
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmNpby5kYW5pZWxAbXNuLmNvbSIsIm5hbWUiOiJNw6FyY2lvIERhbmllbCIsImlhdCI6MTcwOTA1MzkyMiwiZXhwIjoxNzA5NDg1OTIyfQ.VQR5PA-5yMS86cfSE_wIVvEXw3iY1yu_ZGiD9CGwlLU',
         },
+        name: {
+          type: 'string',
+          example: 'Márcio Daniel',
+        },
       },
     },
   })

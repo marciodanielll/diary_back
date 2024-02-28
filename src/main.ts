@@ -4,11 +4,23 @@ import { ISecretsAdapter } from './infra/secrets/';
 import { ILoggerAdapter } from './infra/logger';
 import { name } from '../package.json';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 (async () => {
   const app = await NestFactory.create(AppModule, {
     cors: true,
+    logger: false,
   });
+
+  app.use(helmet());
+
+  app.use(
+    rateLimit({
+      windowMs: 15 * 60 * 1000,
+      max: 100,
+    }),
+  );
 
   const { PORT } = app.get(ISecretsAdapter);
 

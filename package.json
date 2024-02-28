@@ -32,6 +32,8 @@
     "axios-retry": "^4.0.0",
     "bcrypt": "^5.1.1",
     "convert-pino-request-to-curl": "^0.0.29",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "luxon": "^3.4.4",
     "mongoose": "^8.1.3",
