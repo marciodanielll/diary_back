@@ -48,6 +48,6 @@ export class UserLoginUseCase {
       name: userEntity.name,
     });
 
-    return { token };
+    return { token, name: userEntity.name };
   }
 }

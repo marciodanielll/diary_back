@@ -45,6 +45,6 @@ export class UserCreateUseCase {
       name: data.name,
     });
 
-    return { token, name: data.name };
+    return { token };
   }
 }
