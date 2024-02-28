@@ -4,6 +4,11 @@
 docker compose -f Docker-compose.dev.yml up --build -d
 ```
 
+### Rodando as migrações
+```bash
+npm run exec:migration
+```
+
 ### Acessando o container da Aplicação
 ```bash
 docker attach diary_web-server
@@ -13,3 +18,4 @@ docker attach diary_web-server
 ```bash
 npm run start:dev
 ```
+

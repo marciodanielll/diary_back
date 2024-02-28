@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "run:migration": "npx ts-node ./node_modules/.bin/typeorm migration:run -d src/infra/database/postgres-type-orm/data-source.ts",
+    "exec:migration": "npx ts-node ./node_modules/.bin/typeorm migration:run -d src/infra/database/postgres-type-orm/data-source.ts",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
