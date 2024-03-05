@@ -5,7 +5,7 @@ export enum Roles {
   ADMIN = 'admin',
 }
 
-export const userSchema = z
+export const singUpSchema = z
   .object({
     id: z.string().optional(),
     name: z.string(),
@@ -18,10 +18,13 @@ export const userSchema = z
   })
   .strict();
 
-export type User = z.infer<typeof userSchema>;
+export type SingUp = z.infer<typeof singUpSchema>;
 
-export type UserCreateInput = User;
-export type UserCreateOutput = { token: string };
+export type SingUpInput = SingUp;
+export type SingUpOutput = { token: string };
 
-export type UserLoginInput = Pick<User, 'email' | 'password'>;
+export type UserLoginInput = Pick<SingUp, 'email' | 'password'>;
 export type UserLoginOutput = { token: string; name: string };
+
+export const userSchema = singUpSchema;
+export type User = SingUp;

@@ -1,5 +1,8 @@
 import { ILoggerAdapter } from '@/infra/logger';
-import { IUserCreateUseCaseAdapter, IUserLoginUseCaseAdapter } from './adapter';
+import {
+  ISingUpOutputUseCaseAdapter,
+  IUserLoginUseCaseAdapter,
+} from './adapter';
 import { Controller, Post, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from '../../core/user/types';
@@ -8,20 +11,20 @@ import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 @Controller('user')
 @ApiTags('user')
 export class UserController {
-  readonly userCreateUseCase: IUserCreateUseCaseAdapter;
+  readonly singUpUseCase: ISingUpOutputUseCaseAdapter;
   readonly logger: ILoggerAdapter;
   readonly userLoginUseCase: IUserLoginUseCaseAdapter;
   constructor(
-    userCreateUseCase: IUserCreateUseCaseAdapter,
+    singUpUseCase: ISingUpOutputUseCaseAdapter,
     logger: ILoggerAdapter,
     userLoginUseCase: IUserLoginUseCaseAdapter,
   ) {
-    this.userCreateUseCase = userCreateUseCase;
+    this.singUpUseCase = singUpUseCase;
     this.logger = logger;
     this.userLoginUseCase = userLoginUseCase;
   }
 
-  @Post()
+  @Post('singup')
   @ApiOperation({ summary: 'Create a new user' })
   @ApiResponse({
     status: 201,
@@ -58,7 +61,7 @@ export class UserController {
     },
   })
   async create(@Req() { body: user }: Request & { body: User }) {
-    return this.userCreateUseCase.execute(user);
+    return this.singUpUseCase.execute(user);
   }
 
   @Post('login')

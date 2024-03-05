@@ -9,6 +9,7 @@
     "openai",
     "postgres",
     "Retryable",
+    "singup",
     "traceid",
     "upserted"
   ]
