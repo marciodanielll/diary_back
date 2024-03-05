@@ -20,11 +20,11 @@ export const singUpSchema = z
 
 export type SingUp = z.infer<typeof singUpSchema>;
 
-export type SingUpInput = SingUp;
-export type SingUpOutput = { token: string };
+export type SignUpInput = SingUp;
+export type SignUpOutput = { token: string };
 
-export type UserLoginInput = Pick<SingUp, 'email' | 'password'>;
-export type UserLoginOutput = { token: string; name: string };
+export type SignInInput = Pick<SingUp, 'email' | 'password'>;
+export type SignInOutput = { token: string; name: string };
 
 export const userSchema = singUpSchema;
 export type User = SingUp;

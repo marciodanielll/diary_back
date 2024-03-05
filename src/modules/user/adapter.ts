@@ -1,14 +1,14 @@
 import {
-  SingUpInput,
-  UserLoginInput,
-  UserLoginOutput,
-  SingUpOutput,
+  SignInInput,
+  SignInOutput,
+  SignUpOutput,
+  SignUpInput,
 } from '@/core/user/types';
 
-export abstract class ISingUpOutputUseCaseAdapter {
-  abstract execute(data: SingUpInput): Promise<SingUpOutput>;
+export abstract class ISingUpUseCaseAdapter {
+  abstract execute(data: SignUpInput): Promise<SignUpOutput>;
 }
 
-export abstract class IUserLoginUseCaseAdapter {
-  abstract execute(data: UserLoginInput): Promise<UserLoginOutput>;
+export abstract class ISingInUseCaseUseCaseAdapter {
+  abstract execute(data: SignInInput): Promise<SignInOutput>;
 }

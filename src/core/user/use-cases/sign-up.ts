@@ -1,17 +1,17 @@
 import { ApiBadRequestException } from '../../../utils/exception';
 import { ILoggerAdapter } from '@/infra/logger';
 import { IUserRepository } from '../repository';
-import { SingUpInput, SingUpOutput } from '../types';
+import { SignUpInput, SignUpOutput } from '../types';
 import { UserEntity } from '../user.entity';
 import { ICryptoAdapter } from '@/libs/crypto';
 import { ITokenAdapter } from '@/libs/token/adapter';
 
-export class SingUpUseCase {
+export class SignUpUseCase {
   private readonly repository: IUserRepository;
   private readonly logger: ILoggerAdapter;
   private readonly cryptoService: ICryptoAdapter;
   private readonly tokenService: ITokenAdapter;
-  private readonly context = SingUpUseCase.name;
+  private readonly context = SignUpUseCase.name;
 
   constructor(
     userRepository: IUserRepository,
@@ -25,7 +25,7 @@ export class SingUpUseCase {
     this.tokenService = tokenService;
   }
 
-  async execute(data: SingUpInput): Promise<SingUpOutput> {
+  async execute(data: SignUpInput): Promise<SignUpOutput> {
     const userEntity = new UserEntity(data);
 
     const userExist = await this.repository.findOne({ email: data.email });

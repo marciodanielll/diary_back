@@ -3,14 +3,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from './controller';
 import { User } from '@/infra/database/postgres-type-orm/schemas/user';
-import {
-  ISingUpOutputUseCaseAdapter,
-  IUserLoginUseCaseAdapter,
-} from './adapter';
+import { ISingInUseCaseUseCaseAdapter, ISingUpUseCaseAdapter } from './adapter';
 import { IUserRepository } from '@/core/user/repository';
 import { UserRepositoryProviderModule } from './provider';
-import { SingUpUseCase } from '@/core/user/use-cases/sign-up';
-import { UserLoginUseCase } from '@/core/user/use-cases/login';
+import { SignUpUseCase } from '@/core/user/use-cases/sign-up';
+import { SingInUseCase } from '@/core/user/use-cases/sign-in';
 import { TokenModule } from '@/libs/token/module';
 import { CryptoModule, ICryptoAdapter } from '@/libs/crypto';
 import { ITokenAdapter } from '@/libs/token/adapter';
@@ -26,14 +23,14 @@ import { ITokenAdapter } from '@/libs/token/adapter';
   controllers: [UserController],
   providers: [
     {
-      provide: ISingUpOutputUseCaseAdapter,
+      provide: ISingUpUseCaseAdapter,
       useFactory: (
         repository: IUserRepository,
         logger: ILoggerAdapter,
         cryptoService: ICryptoAdapter,
         tokenService: ITokenAdapter,
       ) => {
-        return new SingUpUseCase(
+        return new SignUpUseCase(
           repository,
           logger,
           cryptoService,
@@ -43,14 +40,14 @@ import { ITokenAdapter } from '@/libs/token/adapter';
       inject: [IUserRepository, ILoggerAdapter, ICryptoAdapter, ITokenAdapter],
     },
     {
-      provide: IUserLoginUseCaseAdapter,
+      provide: ISingInUseCaseUseCaseAdapter,
       useFactory: (
         repository: IUserRepository,
         logger: ILoggerAdapter,
         cryptoService: ICryptoAdapter,
         tokenService: ITokenAdapter,
       ) => {
-        return new UserLoginUseCase(
+        return new SingInUseCase(
           repository,
           logger,
           cryptoService,

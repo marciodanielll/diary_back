@@ -1,27 +1,24 @@
 import { ILoggerAdapter } from '@/infra/logger';
-import {
-  ISingUpOutputUseCaseAdapter,
-  IUserLoginUseCaseAdapter,
-} from './adapter';
+import { ISingInUseCaseUseCaseAdapter, ISingUpUseCaseAdapter } from './adapter';
 import { Controller, Post, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { User } from '../../core/user/types';
+import { SignInInput, SignInOutput } from '../../core/user/types';
 import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 
 @Controller('user')
 @ApiTags('user')
 export class UserController {
-  readonly singUpUseCase: ISingUpOutputUseCaseAdapter;
+  readonly singUpUseCase: ISingUpUseCaseAdapter;
   readonly logger: ILoggerAdapter;
-  readonly userLoginUseCase: IUserLoginUseCaseAdapter;
+  readonly sigInUseCase: ISingInUseCaseUseCaseAdapter;
   constructor(
-    singUpUseCase: ISingUpOutputUseCaseAdapter,
+    singUpUseCase: ISingUpUseCaseAdapter,
     logger: ILoggerAdapter,
-    userLoginUseCase: IUserLoginUseCaseAdapter,
+    sigInUseCase: ISingInUseCaseUseCaseAdapter,
   ) {
     this.singUpUseCase = singUpUseCase;
     this.logger = logger;
-    this.userLoginUseCase = userLoginUseCase;
+    this.sigInUseCase = sigInUseCase;
   }
 
   @Post('singup')
@@ -60,11 +57,11 @@ export class UserController {
       },
     },
   })
-  async create(@Req() { body: user }: Request & { body: User }) {
-    return this.singUpUseCase.execute(user);
+  async create(@Req() { body: dataUser }: Request & { body: SignInOutput }) {
+    return this.singUpUseCase.execute(dataUser);
   }
 
-  @Post('login')
+  @Post('signin')
   @ApiOperation({ summary: 'Login' })
   @ApiResponse({
     status: 200,
@@ -100,7 +97,7 @@ export class UserController {
       },
     },
   })
-  async login(@Req() { body: user }: Request & { body: User }) {
-    return this.userLoginUseCase.execute(user);
+  async login(@Req() { body: dataUser }: Request & { body: SignInInput }) {
+    return this.sigInUseCase.execute(dataUser);
   }
 }
