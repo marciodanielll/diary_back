@@ -1,10 +1,11 @@
 import { ApiBadRequestException } from '../../../utils/exception';
 import { ILoggerAdapter } from '@/infra/logger';
 import { IUserRepository } from '../repository';
-import { SignUpInput, SignUpOutput } from '../types';
+import { SignUpInput, SignUpOutput, signUpSchema } from '../types';
 import { UserEntity } from '../user.entity';
 import { ICryptoAdapter } from '@/libs/crypto';
 import { ITokenAdapter } from '@/libs/token/adapter';
+import { ValidateSchema } from '@/utils/validators/validate-schema.decorator';
 
 export class SignUpUseCase {
   private readonly repository: IUserRepository;
@@ -25,6 +26,7 @@ export class SignUpUseCase {
     this.tokenService = tokenService;
   }
 
+  @ValidateSchema(signUpSchema)
   async execute(data: SignUpInput): Promise<SignUpOutput> {
     const userEntity = new UserEntity(data);
 
