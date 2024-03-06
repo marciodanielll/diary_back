@@ -28,28 +28,34 @@ export class SingInUseCase {
 
   @ValidateSchema(signInSchema)
   async execute(data: SignInInput): Promise<SignInOutput> {
-    const userExist = await this.repository.findOne({ email: data.email });
+    try {
+      const userExist = await this.repository.findOne({ email: data.email });
 
-    if (!userExist) {
-      throw new ApiBadRequestException('Email ou senha incorretos');
+      if (!userExist) {
+        throw new ApiBadRequestException('Email ou senha incorretos');
+      }
+
+      const userEntity = new UserEntity(userExist);
+
+      const isPasswordMatch = await this.cryptoService.validateHash(
+        data.password,
+        userEntity.password,
+      );
+
+      if (!isPasswordMatch) {
+        throw new ApiBadRequestException('Email ou senha incorretos');
+      }
+
+      const token = this.tokenService.createToken({
+        email: data.email,
+        name: userEntity.name,
+      });
+
+      return { token, name: userEntity.name };
+    } catch (error) {
+      error.context = this.context;
+
+      throw error;
     }
-
-    const userEntity = new UserEntity(userExist);
-
-    const isPasswordMatch = await this.cryptoService.validateHash(
-      data.password,
-      userEntity.password,
-    );
-
-    if (!isPasswordMatch) {
-      throw new ApiBadRequestException('Email ou senha incorretos');
-    }
-
-    const token = this.tokenService.createToken({
-      email: data.email,
-      name: userEntity.name,
-    });
-
-    return { token, name: userEntity.name };
   }
 }

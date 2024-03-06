@@ -28,25 +28,31 @@ export class SignUpUseCase {
 
   @ValidateSchema(signUpSchema)
   async execute(data: SignUpInput): Promise<SignUpOutput> {
-    const userEntity = new UserEntity(data);
+    try {
+      const userEntity = new UserEntity(data);
 
-    const userExist = await this.repository.findOne({ email: data.email });
+      const userExist = await this.repository.findOne({ email: data.email });
 
-    if (userExist) {
-      throw new ApiBadRequestException('Email já cadastrado.');
+      if (userExist) {
+        throw new ApiBadRequestException('Email já cadastrado.');
+      }
+
+      userEntity.insertHashPassword(
+        await this.cryptoService.createHash(userEntity.password),
+      );
+
+      await this.repository.create(userEntity);
+
+      const token = this.tokenService.createToken({
+        email: data.email,
+        name: data.name,
+      });
+
+      return { token };
+    } catch (error) {
+      error.context = this.context;
+
+      throw error;
     }
-
-    userEntity.insertHashPassword(
-      await this.cryptoService.createHash(userEntity.password),
-    );
-
-    await this.repository.create(userEntity);
-
-    const token = this.tokenService.createToken({
-      email: data.email,
-      name: data.name,
-    });
-
-    return { token };
   }
 }
