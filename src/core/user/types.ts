@@ -5,12 +5,12 @@ export enum Roles {
   ADMIN = 'admin',
 }
 
-export const singUpSchema = z
+export const signUpSchema = z
   .object({
     id: z.string().optional(),
-    name: z.string(),
-    email: z.string(),
-    password: z.string(),
+    name: z.string().min(2),
+    email: z.string().email(),
+    password: z.string().min(8),
     role: z.nativeEnum(Roles).optional(),
     createdAt: z.date().optional(),
     updatedAt: z.date().optional(),
@@ -18,7 +18,12 @@ export const singUpSchema = z
   })
   .strict();
 
-export type SingUp = z.infer<typeof singUpSchema>;
+export const signInSchema = signUpSchema.pick({
+  password: true,
+  email: true,
+});
+
+export type SingUp = z.infer<typeof signUpSchema>;
 
 export type SignUpInput = SingUp;
 export type SignUpOutput = { token: string };
@@ -26,5 +31,5 @@ export type SignUpOutput = { token: string };
 export type SignInInput = Pick<SingUp, 'email' | 'password'>;
 export type SignInOutput = { token: string; name: string };
 
-export const userSchema = singUpSchema;
+export const userSchema = signUpSchema;
 export type User = SingUp;

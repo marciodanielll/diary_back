@@ -6,6 +6,8 @@ RUN apt-get install psmisc
 
 WORKDIR /app
 
+RUN npm install -g npm@10.5.0
 RUN npm install -g @nestjs/cli
+
 
 CMD [ "/bin/bash" ]

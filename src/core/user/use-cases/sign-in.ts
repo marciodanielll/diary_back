@@ -1,10 +1,11 @@
 import { ApiBadRequestException } from '../../../utils/exception';
 import { ILoggerAdapter } from '@/infra/logger';
 import { IUserRepository } from '../repository';
-import { SignInInput, SignInOutput } from '../types';
+import { SignInInput, SignInOutput, signInSchema } from '../types';
 import { UserEntity } from '../user.entity';
 import { ICryptoAdapter } from '@/libs/crypto';
 import { ITokenAdapter } from '@/libs/token/adapter';
+import { ValidateSchema } from '@/utils/validators/validate-schema.decorator';
 
 export class SingInUseCase {
   private readonly repository: IUserRepository;
@@ -25,6 +26,7 @@ export class SingInUseCase {
     this.tokenService = tokenService;
   }
 
+  @ValidateSchema(signInSchema)
   async execute(data: SignInInput): Promise<SignInOutput> {
     const userExist = await this.repository.findOne({ email: data.email });
 
