@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "infra": "sudo chmod +x ./scripts/infra.sh && ./scripts/infra.sh",
     "exec:migration": "npx ts-node ./node_modules/.bin/typeorm migration:run -d src/infra/database/postgres-type-orm/data-source.ts",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  web-server:
+  diary_web-server:
     build: 
       context: .
       dockerfile: Dockerfile.dev
@@ -17,9 +17,9 @@ services:
     networks:
       - diary-network
     depends_on:
-      - mongo-db
-      - postgres-db
-  mongo-db:
+      - diary_mongo-db
+      - diary_postgres-db
+  diary_mongo-db:
     image: mongo:latest
     container_name: diary_mongo-db
     ports:
@@ -31,7 +31,7 @@ services:
       - ./data-mongo:/data/db
     networks:
       - diary-network
-  postgres-db:
+  diary_postgres-db:
     image: postgres:latest
     container_name: diary_postgres-db
     ports:
@@ -49,3 +49,5 @@ services:
 networks:
   diary-network:
     driver: bridge
+
+

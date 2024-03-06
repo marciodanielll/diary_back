@@ -1,22 +1,7 @@
 
-### Starting the containers
+### Starting the containers and access node container
 ```bash
-docker fasdf -f Docker-compose.dev.yml up --build -d
-```
-
-### Accessing the Application container
-```bash
-docker attach diary_web-server
-```
-
-### Accessing the Application container
-```bash
-docker attach diary_web-server
-```
-
-### Install 
-```bash
-npm install
+npm run infra
 ```
 
 ### Running the migrations
