@@ -1,3 +1,5 @@
+import { AppExceptionFilter } from './utils/filters/http-exception.filter';
+import { ExceptionInterceptor } from './utils/interceptors/http-exception.interceptor';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ISecretsAdapter } from './infra/secrets/';
@@ -13,6 +15,8 @@ import rateLimit from 'express-rate-limit';
     logger: false,
   });
 
+  app.useGlobalInterceptors(new ExceptionInterceptor());
+
   app.use(helmet());
 
   app.use(
@@ -27,6 +31,8 @@ import rateLimit from 'express-rate-limit';
   const logger = app.get(ILoggerAdapter);
   logger.setApplication(name);
   app.useLogger(logger);
+
+  app.useGlobalFilters(new AppExceptionFilter(logger));
 
   const configSwagger = new DocumentBuilder()
     .setTitle(name)
