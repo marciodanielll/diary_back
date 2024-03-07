@@ -14,3 +14,5 @@ npm run exec:migration
 npm run start:dev
 ```
 
+### Deploy
+#### [Link](https://new-project-yriu.onrender.com/doc#/)

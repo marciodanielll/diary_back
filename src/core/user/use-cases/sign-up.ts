@@ -41,14 +41,14 @@ export class SignUpUseCase {
         await this.cryptoService.createHash(userEntity.password),
       );
 
-      await this.repository.create(userEntity);
+      const newUser = await this.repository.create(userEntity);
 
       const token = this.tokenService.createToken({
         email: data.email,
         name: data.name,
       });
 
-      return { token };
+      return { token, id: newUser.id };
     } catch (error) {
       error.context = this.context;
 

@@ -1,10 +1,10 @@
+import { SwaggerResponseUser } from './swagger';
 import { ILoggerAdapter } from '@/infra/logger';
 import { ISingInUseCaseUseCaseAdapter, ISingUpUseCaseAdapter } from './adapter';
 import { Controller, Post, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SignInInput, SignInOutput } from '../../core/user/types';
+import { SignInInput, SignUpInput } from '../../core/user/types';
 import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
-
 @Controller('user')
 @ApiTags('user')
 export class UserController {
@@ -23,20 +23,7 @@ export class UserController {
 
   @Post('singup')
   @ApiOperation({ summary: 'Create a new user' })
-  @ApiResponse({
-    status: 201,
-    description: 'The user has been successfully created.',
-    schema: {
-      type: 'object',
-      properties: {
-        token: {
-          type: 'string',
-          example:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmNpby5kYW5pZWxAbXNuLmNvbSIsIm5hbWUiOiJNw6FyY2lvIERhbmllbCIsImlhdCI6MTcwOTA1MzkyMiwiZXhwIjoxNzA5NDg1OTIyfQ.VQR5PA-5yMS86cfSE_wIVvEXw3iY1yu_ZGiD9CGwlLU',
-        },
-      },
-    },
-  })
+  @ApiResponse(SwaggerResponseUser.singup[201])
   @ApiResponse({ status: 400, description: 'Bad Request.' })
   @ApiBody({
     schema: {
@@ -57,7 +44,7 @@ export class UserController {
       },
     },
   })
-  async create(@Req() { body: dataUser }: Request & { body: SignInOutput }) {
+  async create(@Req() { body: dataUser }: Request & { body: SignUpInput }) {
     return this.singUpUseCase.execute(dataUser);
   }
 

@@ -26,7 +26,7 @@ export const signInSchema = signUpSchema.pick({
 export type SingUp = z.infer<typeof signUpSchema>;
 
 export type SignUpInput = SingUp;
-export type SignUpOutput = { token: string };
+export type SignUpOutput = { token: string; id: string };
 
 export type SignInInput = Pick<SingUp, 'email' | 'password'>;
 export type SignInOutput = { token: string; name: string };
