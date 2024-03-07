@@ -1,4 +1,4 @@
-import { SwaggerResponseUser } from './swagger';
+import { SwaggerResponseUser, SwaggerRequestUser } from './swagger';
 import { ILoggerAdapter } from '@/infra/logger';
 import { ISingInUseCaseUseCaseAdapter, ISingUpUseCaseAdapter } from './adapter';
 import { Controller, Post, Req } from '@nestjs/common';
@@ -22,69 +22,20 @@ export class UserController {
   }
 
   @Post('singup')
-  @ApiOperation({ summary: 'Create a new user' })
-  @ApiResponse(SwaggerResponseUser.singup[201])
+  @ApiOperation({ summary: 'Create a new user for access application' })
+  @ApiResponse(SwaggerResponseUser.signup[201])
   @ApiResponse({ status: 400, description: 'Bad Request.' })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        name: {
-          type: 'string',
-          example: 'Márcio Daniel',
-        },
-        email: {
-          type: 'string',
-          example: 'marcio.daniel@msn.com',
-        },
-        password: {
-          type: 'string',
-          example: '12345678',
-        },
-      },
-    },
-  })
-  async create(@Req() { body: dataUser }: Request & { body: SignUpInput }) {
+  @ApiBody(SwaggerRequestUser.receivePayloadToSignUp)
+  async singup(@Req() { body: dataUser }: Request & { body: SignUpInput }) {
     return this.singUpUseCase.execute(dataUser);
   }
 
   @Post('signin')
-  @ApiOperation({ summary: 'Login' })
-  @ApiResponse({
-    status: 200,
-    description: 'The user has been successfully logged in.',
-    schema: {
-      type: 'object',
-      properties: {
-        token: {
-          type: 'string',
-          example:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmNpby5kYW5pZWxAbXNuLmNvbSIsIm5hbWUiOiJNw6FyY2lvIERhbmllbCIsImlhdCI6MTcwOTA1MzkyMiwiZXhwIjoxNzA5NDg1OTIyfQ.VQR5PA-5yMS86cfSE_wIVvEXw3iY1yu_ZGiD9CGwlLU',
-        },
-        name: {
-          type: 'string',
-          example: 'Márcio Daniel',
-        },
-      },
-    },
-  })
+  @ApiOperation({ summary: 'Signin' })
+  @ApiResponse(SwaggerResponseUser.signin[200])
   @ApiResponse({ status: 400, description: 'Bad Request.' })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        email: {
-          type: 'string',
-          example: 'marcio.daniel@msn.com',
-        },
-        password: {
-          type: 'string',
-          example: '12345678',
-        },
-      },
-    },
-  })
-  async login(@Req() { body: dataUser }: Request & { body: SignInInput }) {
+  @ApiBody(SwaggerRequestUser.receivePayloadToSignIn)
+  async signin(@Req() { body: dataUser }: Request & { body: SignInInput }) {
     return this.sigInUseCase.execute(dataUser);
   }
 }

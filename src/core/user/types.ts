@@ -18,14 +18,16 @@ export const signUpSchema = z
   })
   .strict();
 
-export const signInSchema = signUpSchema.pick({
-  password: true,
-  email: true,
-});
+export const signInSchema = signUpSchema
+  .pick({
+    password: true,
+    email: true,
+  })
+  .strict();
 
 export type SingUp = z.infer<typeof signUpSchema>;
 
-export type SignUpInput = SingUp;
+export type SignUpInput = Pick<SingUp, 'name' | 'email' | 'password'>;
 export type SignUpOutput = { token: string; id: string };
 
 export type SignInInput = Pick<SingUp, 'email' | 'password'>;
