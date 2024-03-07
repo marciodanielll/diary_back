@@ -37,7 +37,7 @@ export const SwaggerResponseUser = {
     }),
   },
   signin: {
-    200: swagger.defaultRequestJSON({
+    200: swagger.defaultResponseJSON({
       json: payloadOutputSignIn,
       status: 200,
       description: 'The user has been successfully logged in.',

@@ -33,8 +33,8 @@ export class UserController {
   @Post('signin')
   @ApiOperation({ summary: 'Signin' })
   @ApiResponse(SwaggerResponseUser.signin[200])
-  @ApiResponse({ status: 400, description: 'Bad Request.' })
   @ApiBody(SwaggerRequestUser.receivePayloadToSignIn)
+  @ApiResponse({ status: 400, description: 'Bad Request.' })
   async signin(@Req() { body: dataUser }: Request & { body: SignInInput }) {
     return this.sigInUseCase.execute(dataUser);
   }
