@@ -8,9 +8,9 @@ import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 @Controller('user')
 @ApiTags('user')
 export class UserController {
-  readonly singUpUseCase: ISingUpUseCaseAdapter;
-  readonly logger: ILoggerAdapter;
-  readonly sigInUseCase: ISingInUseCaseUseCaseAdapter;
+  private readonly singUpUseCase: ISingUpUseCaseAdapter;
+  private readonly logger: ILoggerAdapter;
+  private readonly sigInUseCase: ISingInUseCaseUseCaseAdapter;
   constructor(
     singUpUseCase: ISingUpUseCaseAdapter,
     logger: ILoggerAdapter,
