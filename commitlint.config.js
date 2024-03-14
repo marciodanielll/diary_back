@@ -27,6 +27,7 @@ scopes.push(
   'infra',
   'swagger',
   'docs',
+  'todo',
 );
 
 module.exports = {

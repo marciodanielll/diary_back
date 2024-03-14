@@ -7,3 +7,6 @@ else
 fi
 
 npx typeorm migration:create ../src/infra/database/postgres-type-orm/migrations/$migrationName
+
+## Otimizar esse script, para rodar via npm run create-migration
+## ajustar para dar peremissão para todo munso para editar a migration
