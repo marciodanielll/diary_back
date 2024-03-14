@@ -5,6 +5,8 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
 import { User } from './user';
@@ -14,20 +16,26 @@ export class Diary extends BaseEntity {
   @Column({ type: 'uuid', primary: true, generated: 'uuid' })
   id: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: false })
   iv: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: false })
   encryptedData: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: false })
   title: string;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @Column({ name: 'user_id', type: 'uuid', nullable: false })
+  userId: string;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp', nullable: false })
   updatedAt: Date;
 
-  @Column({ name: 'user_id', type: 'uuid' })
-  userId: string;
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp', nullable: false })
+  createdAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp', nullable: true })
+  deletedAt?: Date;
 
   @ManyToOne(() => User, (user) => user.diaries)
   @JoinColumn({ name: 'user_id' })
