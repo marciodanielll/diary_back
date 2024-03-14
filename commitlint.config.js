@@ -28,6 +28,7 @@ scopes.push(
   'swagger',
   'docs',
   'todo',
+  'diary',
 );
 
 module.exports = {

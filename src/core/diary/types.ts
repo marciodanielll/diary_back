@@ -3,12 +3,13 @@ import z from 'zod';
 export const diarySchema = z
   .object({
     id: z.string().uuid(),
-    iv: z.string(),
+    iv: z.string().max(255),
     encryptedData: z.string(),
+    title: z.string().max(255),
+    userId: z.string().uuid(),
     createdAt: z.date().optional(),
     updatedAt: z.date().optional(),
-    encrypted_data: z.string(),
-    userId: z.string().uuid(),
+    deletedAt: z.date().nullable().optional(),
   })
   .strict();
 
