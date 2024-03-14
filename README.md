@@ -14,5 +14,9 @@ npm run exec:migration
 npm run start:dev
 ```
 
+### Attention
+ Execute all the CLI commands inside the container, such as installing packages, uninstalling packages, creating, and running migrations.
+
+
 ### Deploy
 #### [Link](https://new-project-yriu.onrender.com/doc#/)
