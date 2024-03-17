@@ -28,6 +28,12 @@ export class SignUpUseCase {
 
   @ValidateSchema(signUpSchema)
   async execute(data: SignUpInput): Promise<SignUpOutput> {
+    this.logger.info({
+      message: 'Signing up entry',
+      context: this.context,
+      obj: data,
+    });
+
     try {
       const userEntity = new UserEntity(data);
 
@@ -48,7 +54,18 @@ export class SignUpUseCase {
         name: data.name,
       });
 
-      return { token, id: newUser.id };
+      const response = {
+        token,
+        id: newUser.id,
+      };
+
+      this.logger.info({
+        message: 'Signing up success',
+        context: this.context,
+        obj: response,
+      });
+
+      return response;
     } catch (error) {
       error.context = this.context;
 

@@ -29,6 +29,12 @@ export class SingInUseCase {
   @ValidateSchema(signInSchema)
   async execute(data: SignInInput): Promise<SignInOutput> {
     try {
+      this.logger.info({
+        message: 'Signing in entry',
+        context: this.context,
+        obj: data,
+      });
+
       const userExist = await this.repository.findOne({ email: data.email });
 
       if (!userExist) {
@@ -51,7 +57,18 @@ export class SingInUseCase {
         name: userEntity.name,
       });
 
-      return { token, name: userEntity.name };
+      const response = {
+        token,
+        name: userEntity.name,
+      };
+
+      this.logger.info({
+        message: 'Signing in success',
+        context: this.context,
+        obj: response,
+      });
+
+      return response;
     } catch (error) {
       error.context = this.context;
 

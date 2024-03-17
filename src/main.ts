@@ -26,7 +26,7 @@ import rateLimit from 'express-rate-limit';
     }),
   );
 
-  const { PORT } = app.get(ISecretsAdapter);
+  const { PORT, NODE_ENV } = app.get(ISecretsAdapter);
 
   const logger = app.get(ILoggerAdapter);
   logger.setApplication(name);
@@ -44,5 +44,8 @@ import rateLimit from 'express-rate-limit';
 
   await app.listen(PORT, () => {
     logger.log(`Server is running on port ${PORT}`);
+    if (NODE_ENV === 'local') {
+      logger.log(`Swagger is running http://localhost:${PORT}/doc`);
+    }
   });
 })();
