@@ -5,6 +5,8 @@ export enum Roles {
   ADMIN = 'admin',
 }
 
+import { diarySchema } from '../diary/types';
+
 export const signUpSchema = z
   .object({
     id: z.string().optional(),
@@ -15,6 +17,7 @@ export const signUpSchema = z
     createdAt: z.date().optional(),
     updatedAt: z.date().optional(),
     isActivated: z.boolean().optional(),
+    diaries: z.array(diarySchema).default([]),
   })
   .strict();
 

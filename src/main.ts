@@ -12,10 +12,7 @@ import rateLimit from 'express-rate-limit';
 (async () => {
   const app = await NestFactory.create(AppModule, {
     cors: true,
-    logger: false,
   });
-
-  app.useGlobalInterceptors(new ExceptionInterceptor());
 
   app.use(helmet());
 
@@ -31,6 +28,8 @@ import rateLimit from 'express-rate-limit';
   const logger = app.get(ILoggerAdapter);
   logger.setApplication(name);
   app.useLogger(logger);
+
+  app.useGlobalInterceptors(new ExceptionInterceptor());
 
   app.useGlobalFilters(new AppExceptionFilter(logger));
 

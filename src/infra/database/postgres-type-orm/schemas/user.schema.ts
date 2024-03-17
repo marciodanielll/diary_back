@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Diary } from './diary';
+import { DiarySchema } from './diary.schema';
 
 enum Role {
   ADMIN = 'admin',
@@ -14,7 +14,7 @@ enum Role {
 }
 
 @Entity({ name: 'users' })
-export class User extends BaseEntity {
+export class UserSchema extends BaseEntity {
   @Column({ type: 'uuid', primary: true, generated: 'uuid' })
   id: string;
 
@@ -39,6 +39,8 @@ export class User extends BaseEntity {
   @Column({ name: 'is_activated', default: true })
   isActivated: boolean;
 
-  @OneToMany(() => Diary, (diary) => diary.user)
-  diaries: Diary[];
+  @OneToMany(() => DiarySchema, (diary) => diary.user, {
+    cascade: ['insert', 'recover', 'update'],
+  })
+  diaries: DiarySchema[];
 }

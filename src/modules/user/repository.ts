@@ -1,10 +1,10 @@
 import { PostgresRepository } from './../../infra/repository/postgres/service';
-import { User } from '../../infra/database/postgres-type-orm/schemas/user';
+import { UserSchema } from '../../infra/database/postgres-type-orm/schemas/user.schema';
 import { UserEntity } from '../../core/user/user.entity';
-import { IUserRepository } from '@/core/user/repository';
+import { IUserRepository } from '@/core/user/user.repository';
 import { Repository } from 'typeorm';
 
-type Model = User & UserEntity;
+type Model = UserSchema & UserEntity;
 
 export class UserRepository
   extends PostgresRepository<Model>

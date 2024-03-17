@@ -5,13 +5,17 @@ export const diarySchema = z
     id: z.string().uuid(),
     iv: z.string().max(255),
     encryptedData: z.string(),
-    title: z.string().max(255),
     userId: z.string().uuid(),
     createdAt: z.date().optional(),
     updatedAt: z.date().optional(),
     deletedAt: z.date().nullable().optional(),
   })
   .strict();
+
+export const diaryCreateInputSchema = z.object({
+  text: z.string().max(255),
+  email: z.string().email(),
+});
 
 export type Diary = z.infer<typeof diarySchema>;
 

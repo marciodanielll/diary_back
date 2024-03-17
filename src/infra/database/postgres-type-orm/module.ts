@@ -20,7 +20,7 @@ import { ISecretsAdapter, SecretsModule } from '@/infra/secrets';
           url: isLocal ? POSTGRES_URL : POSTGRES_PROD,
           timeout: 5000,
           connectTimeout: 5000,
-          logging: false,
+          logging: true,
           autoLoadEntities: true,
           namingStrategy: new SnakeNamingStrategy(),
           synchronize: isLocal,

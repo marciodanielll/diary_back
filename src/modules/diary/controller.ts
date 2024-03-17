@@ -9,25 +9,37 @@ import {
   Put,
   Req,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ICreateDiaryCaseAdapter } from './adapter';
+import { DiaryCreateInput } from '@/core/diary/types';
 
 @Controller('diary')
 @ApiTags('diary')
 export class DiaryController {
   private readonly logger: ILoggerAdapter;
   private readonly context = DiaryController.name;
-  constructor(logger: ILoggerAdapter) {
+  private readonly createDiaryUseCase: ICreateDiaryCaseAdapter;
+  constructor(
+    logger: ILoggerAdapter,
+    createDiaryUseCase: ICreateDiaryCaseAdapter,
+  ) {
     this.logger = logger;
+    this.createDiaryUseCase = createDiaryUseCase;
   }
   @Post('/')
   @ApiOperation({ summary: 'Create a new diary' })
-  async create(@Req() { body }: Request & { body: unknown }) {
-    this.logger.info({
-      message: 'Creating a new diary',
-      obj: body,
-      context: this.context,
-    });
-    return body;
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        email: { type: 'string', example: 'marcio.daniel@msn.com' },
+        text: { type: 'string', example: 'A book about a kid' },
+      },
+    },
+  })
+  async create(@Req() { body }: Request & { body: DiaryCreateInput }) {
+    const result = await this.createDiaryUseCase.execute(body);
+    return result;
   }
 
   @Put(':id')

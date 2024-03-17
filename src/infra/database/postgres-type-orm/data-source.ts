@@ -21,9 +21,9 @@ export const generatePostgresUrl = (): string => {
 const dataSource = new DataSource({
   type: 'postgres',
   url: generatePostgresUrl(),
-  logging: false,
+  logging: true,
   namingStrategy: new SnakeNamingStrategy(),
-  synchronize: false,
+  synchronize: true,
   migrationsTableName: 'migration_collection',
   entities: ['./src/infra/database/postgres-type-orm/schemas/*.ts'],
   migrations: ['./src/infra/database/postgres-type-orm/migrations/*.ts'],

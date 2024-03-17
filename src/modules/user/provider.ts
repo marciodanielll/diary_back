@@ -2,22 +2,22 @@ import { Module, Provider } from '@nestjs/common';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 
 import { UserEntity } from '@/core/user/user.entity';
-import { IUserRepository } from '@/core/user/repository';
-import { User } from '@/infra/database/postgres-type-orm/schemas/user';
+import { IUserRepository } from '@/core/user/user.repository';
+import { UserSchema } from '@/infra/database/postgres-type-orm/schemas/user.schema';
 
 import { UserRepository } from './repository';
 import { Repository } from 'typeorm';
 
 const userRepositoryProvider: Provider = {
   provide: IUserRepository,
-  useFactory: (repository: Repository<User & UserEntity>) => {
+  useFactory: (repository: Repository<UserSchema & UserEntity>) => {
     return new UserRepository(repository);
   },
-  inject: [getRepositoryToken(User)],
+  inject: [getRepositoryToken(UserSchema)],
 };
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([UserSchema])],
   providers: [userRepositoryProvider],
   exports: [IUserRepository],
 })

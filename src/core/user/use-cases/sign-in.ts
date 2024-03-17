@@ -1,6 +1,6 @@
 import { ApiBadRequestException } from '../../../utils/exception';
 import { ILoggerAdapter } from '@/infra/logger';
-import { IUserRepository } from '../repository';
+import { IUserRepository } from '../user.repository';
 import { SignInInput, SignInOutput, signInSchema } from '../types';
 import { UserEntity } from '../user.entity';
 import { ICryptoAdapter } from '@/libs/crypto';

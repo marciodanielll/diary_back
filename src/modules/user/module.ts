@@ -2,9 +2,9 @@ import { ILoggerAdapter, LoggerModule } from '@/infra/logger';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from './controller';
-import { User } from '@/infra/database/postgres-type-orm/schemas/user';
+import { UserSchema } from '@/infra/database/postgres-type-orm/schemas/user.schema';
 import { ISingInUseCaseUseCaseAdapter, ISingUpUseCaseAdapter } from './adapter';
-import { IUserRepository } from '@/core/user/repository';
+import { IUserRepository } from '@/core/user/user.repository';
 import { UserRepositoryProviderModule } from './provider';
 import { SignUpUseCase } from '@/core/user/use-cases/sign-up';
 import { SingInUseCase } from '@/core/user/use-cases/sign-in';
@@ -15,7 +15,7 @@ import { ITokenAdapter } from '@/libs/token/adapter';
 @Module({
   imports: [
     LoggerModule,
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([UserSchema]),
     UserRepositoryProviderModule,
     TokenModule,
     CryptoModule,

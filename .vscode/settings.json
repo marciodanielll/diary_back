@@ -12,6 +12,7 @@
     "signin",
     "singup",
     "traceid",
-    "upserted"
+    "upserted",
+    "usecase"
   ]
 }

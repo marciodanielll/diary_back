@@ -8,6 +8,7 @@ export class DiaryEntity
   iv: string;
   encryptedData: string;
   userId: string;
+  deletedAt: Date | null;
 
   constructor(entity: Diary) {
     super();

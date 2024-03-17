@@ -11,7 +11,6 @@ export interface IEntity {
   id: string;
   createdAt: Date;
   updatedAt: Date;
-  isActivated?: boolean;
 }
 
 export const BaseEntity = <T extends { _id?: string; id?: string }>(
@@ -21,7 +20,6 @@ export const BaseEntity = <T extends { _id?: string; id?: string }>(
     readonly id: string;
     readonly createdAt: Date;
     readonly updatedAt: Date;
-    isActivated?: boolean;
 
     static nameOf = (name: keyof T) => name;
 
