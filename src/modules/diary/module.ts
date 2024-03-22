@@ -11,7 +11,7 @@ import { ICreateDiaryCaseAdapter } from './adapter';
 import { UserRepositoryProviderModule } from '../user/provider';
 import { UserSchema } from '@/infra/database/postgres-type-orm/schemas/user.schema';
 import { CryptoModule, ICryptoAdapter } from '@/libs/crypto';
-
+import { TokenModule } from '@/libs/token/module';
 @Module({
   imports: [
     LoggerModule,
@@ -19,6 +19,7 @@ import { CryptoModule, ICryptoAdapter } from '@/libs/crypto';
     UserRepositoryProviderModule,
     TypeOrmModule.forFeature([DiarySchema, UserSchema]),
     CryptoModule,
+    TokenModule,
   ],
   controllers: [DiaryController],
   providers: [

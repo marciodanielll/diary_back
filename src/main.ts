@@ -12,6 +12,7 @@ import rateLimit from 'express-rate-limit';
 (async () => {
   const app = await NestFactory.create(AppModule, {
     cors: true,
+    logger: ['error'],
   });
 
   app.use(helmet());
@@ -36,6 +37,10 @@ import rateLimit from 'express-rate-limit';
   const configSwagger = new DocumentBuilder()
     .setTitle(name)
     .setVersion('1.0')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'access-token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, configSwagger);

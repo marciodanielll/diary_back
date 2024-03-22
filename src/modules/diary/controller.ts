@@ -8,10 +8,12 @@ import {
   Post,
   Put,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ICreateDiaryCaseAdapter } from './adapter';
 import { DiaryCreateInput } from '@/core/diary/types';
+import { AuthGuard } from '@/utils/guards/auth.guard';
 
 @Controller('diary')
 @ApiTags('diary')
@@ -28,6 +30,7 @@ export class DiaryController {
   }
   @Post('/')
   @ApiOperation({ summary: 'Create a new diary' })
+  @UseGuards(AuthGuard)
   @ApiBody({
     schema: {
       type: 'object',
@@ -43,6 +46,7 @@ export class DiaryController {
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Update a diary' })
   async update(
     @Req() { body }: Request & { body: unknown },
@@ -57,6 +61,7 @@ export class DiaryController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Patch a diary' })
   async patch(
     @Req() { body }: Request & { body: unknown },
@@ -71,6 +76,7 @@ export class DiaryController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Delete a diary' })
   async delete(@Param('id') id: string) {
     this.logger.info({
@@ -82,6 +88,7 @@ export class DiaryController {
   }
 
   @Get('/')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'List all diaries' })
   async list() {
     this.logger.info({
@@ -93,6 +100,7 @@ export class DiaryController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Get a diary by id' })
   async get(@Param('id') id: string) {
     this.logger.info({
