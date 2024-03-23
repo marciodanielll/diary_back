@@ -28,7 +28,7 @@ export class SignUpUseCase {
 
   @ValidateSchema(signUpSchema)
   async execute(data: SignUpInput): Promise<SignUpOutput> {
-    this.logger.info({
+    this.logger.debug({
       message: 'Signing up entry',
       context: this.context,
       obj: data,
@@ -59,7 +59,7 @@ export class SignUpUseCase {
         id: newUser.id,
       };
 
-      this.logger.info({
+      this.logger.debug({
         message: 'Signing up success',
         context: this.context,
         obj: response,

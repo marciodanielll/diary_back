@@ -29,7 +29,7 @@ export class SingInUseCase {
   @ValidateSchema(signInSchema)
   async execute(data: SignInInput): Promise<SignInOutput> {
     try {
-      this.logger.info({
+      this.logger.debug({
         message: 'Signing in entry',
         context: this.context,
         obj: data,
@@ -62,7 +62,7 @@ export class SingInUseCase {
         name: userEntity.name,
       };
 
-      this.logger.info({
+      this.logger.debug({
         message: 'Signing in success',
         context: this.context,
         obj: response,
