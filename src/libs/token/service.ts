@@ -1,7 +1,7 @@
-import { ISecretsAdapter } from '@/infra/secrets';
+import { ISecretsAdapter } from '@infra/secrets';
 import { ITokenAdapter } from './adapter';
 import jwt from 'jsonwebtoken';
-import { ILoggerAdapter } from '@/infra/logger';
+import { ILoggerAdapter } from '@infra/logger';
 import { jwtAlgorithms } from './types';
 
 export class TokenService implements ITokenAdapter {

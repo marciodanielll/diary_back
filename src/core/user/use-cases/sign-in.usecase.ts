@@ -1,18 +1,18 @@
 import { ApiBadRequestException } from '../../../utils/exception';
-import { ILoggerAdapter } from '@/infra/logger';
+import { ILoggerAdapter } from '@infra/logger';
 import { IUserRepository } from '../user.repository';
-import { SignUpInput, SignUpOutput, signUpSchema } from '../types';
+import { SignInInput, SignInOutput, signInSchema } from '../types';
 import { UserEntity } from '../user.entity';
-import { ICryptoAdapter } from '@/libs/crypto';
-import { ITokenAdapter } from '@/libs/token/adapter';
-import { ValidateSchema } from '@/utils/validators/validate-schema.decorator';
+import { ICryptoAdapter } from '@libs/crypto';
+import { ITokenAdapter } from '@libs/token';
+import { ValidateSchema } from '@utils/validators/validate-schema.decorator';
 
-export class SignUpUseCase {
+export class SingInUseCase {
   private readonly repository: IUserRepository;
   private readonly logger: ILoggerAdapter;
   private readonly cryptoService: ICryptoAdapter;
   private readonly tokenService: ITokenAdapter;
-  private readonly context = SignUpUseCase.name;
+  private readonly context = SingInUseCase.name;
 
   constructor(
     userRepository: IUserRepository,
@@ -26,41 +26,43 @@ export class SignUpUseCase {
     this.tokenService = tokenService;
   }
 
-  @ValidateSchema(signUpSchema)
-  async execute(data: SignUpInput): Promise<SignUpOutput> {
-    this.logger.debug({
-      message: 'Signing up entry',
-      context: this.context,
-      obj: data,
-    });
-
+  @ValidateSchema(signInSchema)
+  async execute(data: SignInInput): Promise<SignInOutput> {
     try {
-      const userEntity = new UserEntity(data);
+      this.logger.debug({
+        message: 'Signing in entry',
+        context: this.context,
+      });
 
       const userExist = await this.repository.findOne({ email: data.email });
 
-      if (userExist) {
-        throw new ApiBadRequestException('Email já cadastrado.');
+      if (!userExist) {
+        throw new ApiBadRequestException('Email ou senha incorretos');
       }
 
-      userEntity.insertHashPassword(
-        await this.cryptoService.createHash(userEntity.password),
+      const userEntity = new UserEntity(userExist);
+
+      const isPasswordMatch = await this.cryptoService.validateHash(
+        data.password,
+        userEntity.password,
       );
 
-      const newUser = await this.repository.create(userEntity);
+      if (!isPasswordMatch) {
+        throw new ApiBadRequestException('Email ou senha incorretos');
+      }
 
       const token = this.tokenService.createToken({
         email: data.email,
-        name: data.name,
+        name: userEntity.name,
       });
 
       const response = {
         token,
-        id: newUser.id,
+        name: userEntity.name,
       };
 
       this.logger.debug({
-        message: 'Signing up success',
+        message: 'Signing in success',
         context: this.context,
         obj: response,
       });

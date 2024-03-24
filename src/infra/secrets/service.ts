@@ -1,11 +1,11 @@
-import { jwtAlgorithms } from './../../libs/token/types';
+import { jwtAlgorithms } from '@libs/token/types';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { ISecretsAdapter } from './adapter';
 import { LogLevelTuple } from '../logger';
 import { ChatCompletionMessageParam } from 'openai/resources';
-import { encodingsTuple } from '@/libs/crypto/types';
+import { encodingsTuple } from '@libs/crypto/types';
 
 @Injectable()
 export class SecretsService implements ISecretsAdapter {

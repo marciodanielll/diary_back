@@ -6,7 +6,7 @@ import {
   SaveOptions,
 } from 'typeorm';
 
-import { IEntity } from '@/utils/entity';
+import { IEntity } from '@utils/entity';
 import { IRepository } from './adapter';
 import { CreatedModel, UpdatedModel } from './types';
 

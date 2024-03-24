@@ -1,12 +1,11 @@
 import { Test } from '@nestjs/testing';
-import { ILoggerAdapter } from '@/infra/logger/';
+import { ILoggerAdapter } from '@infra/logger/';
 import { IUserRepository } from '../user.repository';
-import { ICryptoAdapter } from '@/libs/crypto';
-import { ITokenAdapter } from '@/libs/token/adapter';
-import { expectZodError } from '@/utils/tests/helpers';
-
-import { SingInUseCase } from './sign-in';
-import { ISingInUseCaseUseCaseAdapter } from '@/modules/user/adapter';
+import { ICryptoAdapter } from '@libs/crypto';
+import { ITokenAdapter } from '@libs/token';
+import { expectZodError } from '@utils/tests/helpers';
+import { SingInUseCase } from '../use-cases/sign-in.usecase';
+import { ISingInUseCaseUseCaseAdapter } from '@modules/user/adapter';
 import { Roles, User } from '../types';
 
 const MOCK_USER: User = {

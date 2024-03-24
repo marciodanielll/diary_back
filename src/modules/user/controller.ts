@@ -1,9 +1,9 @@
 import { SwaggerResponseUser, SwaggerRequestUser } from './swagger';
-import { ILoggerAdapter } from '@/infra/logger';
+import { ILoggerAdapter } from '@infra/logger';
 import { ISingInUseCaseUseCaseAdapter, ISingUpUseCaseAdapter } from './adapter';
 import { Controller, Post, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SignInInput, SignUpInput } from '../../core/user/types';
+import { SignInInput, SignUpInput } from '@core/user/types';
 import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 @Controller('user')
 @ApiTags('user')

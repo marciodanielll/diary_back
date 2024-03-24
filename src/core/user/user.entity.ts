@@ -1,6 +1,6 @@
 import { DiaryEntity } from '../diary/diary.entity';
 import { userSchema, User, Roles } from './types';
-import { BaseEntity, IEntity } from '@/utils/entity';
+import { BaseEntity, IEntity } from '@utils/entity';
 
 export class UserEntity
   extends BaseEntity<User>(userSchema)

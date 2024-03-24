@@ -1,7 +1,7 @@
-import { jwtAlgorithms } from '@/libs/token/types';
+import { jwtAlgorithms } from '@libs/token/types';
 import { LogLevelTuple } from '../logger/';
 import { ChatCompletionMessageParam } from 'openai/resources';
-import { encodingsTuple } from '@/libs/crypto/types';
+import { encodingsTuple } from '@libs/crypto/types';
 
 export abstract class ISecretsAdapter {
   PORT: number;

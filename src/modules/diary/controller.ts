@@ -12,8 +12,8 @@ import {
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ICreateDiaryCaseAdapter } from './adapter';
-import { DiaryCreateInput } from '@/core/diary/types';
-import { AuthGuard } from '@/utils/guards/auth.guard';
+import { DiaryCreateInput } from '@core/diary/types';
+import { AuthGuard } from '@utils/guards/auth.guard';
 
 @Controller('diary')
 @ApiTags('diary')

@@ -19,6 +19,6 @@ export const diaryCreateInputSchema = z.object({
 
 export type Diary = z.infer<typeof diarySchema>;
 
+///////////////////////////////////
 export type DiaryCreateInput = { text: string; email: string };
-
 export type DiaryCreateOutput = { id: string };

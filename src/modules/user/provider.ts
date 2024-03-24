@@ -1,9 +1,9 @@
 import { Module, Provider } from '@nestjs/common';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 
-import { UserEntity } from '@/core/user/user.entity';
-import { IUserRepository } from '@/core/user/user.repository';
-import { UserSchema } from '@/infra/database/postgres-type-orm/schemas/user.schema';
+import { UserEntity } from '@core/user/user.entity';
+import { IUserRepository } from '@core/user/user.repository';
+import { UserSchema } from '@infra/database/postgres-type-orm/schemas/user.schema';
 
 import { UserRepository } from './repository';
 import { Repository } from 'typeorm';

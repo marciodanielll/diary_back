@@ -8,8 +8,8 @@ import {
 import { AxiosError } from 'axios';
 import { ZodError } from 'zod';
 
-import { ILoggerAdapter } from '@/infra/logger/adapter';
-import { BaseException, ErrorModel } from '@/utils/exception';
+import { ILoggerAdapter } from '@infra/logger/adapter';
+import { BaseException, ErrorModel } from '@utils/exception';
 
 import { DateUtils } from '../date';
 import errorStatus from '../status-codes.json';

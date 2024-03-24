@@ -4,7 +4,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import path from 'path';
 
-import { ISecretsAdapter, SecretsModule } from '@/infra/secrets';
+import { ISecretsAdapter, SecretsModule } from '@infra/secrets';
 
 @Module({
   imports: [
@@ -25,8 +25,8 @@ import { ISecretsAdapter, SecretsModule } from '@/infra/secrets';
           namingStrategy: new SnakeNamingStrategy(),
           synchronize: isLocal,
           migrationsTableName: 'migration_collection',
-          entities: [path.join(__dirname, '/schemas/*.{ts,js}')],
-          migrations: [path.join(__dirname, '/migrations/*.{ts,js}')],
+          entities: [path.join(__dirname, '/schemas/*.{ts}')],
+          migrations: [path.join(__dirname, '/migrations/*.{ts}')],
         };
       },
       async dataSourceFactory(options: DataSourceOptions) {

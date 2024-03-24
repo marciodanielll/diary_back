@@ -1,12 +1,12 @@
-import { swagger } from '@/utils/docs/swagger';
-import { jwtTokenExample as token } from '@/utils/docs/examples';
+import { swagger } from '@utils/docs/swagger';
+import { jwtTokenExample as token } from '@utils/docs/examples';
 import crypto from 'crypto';
 import {
   SignUpInput,
   SignUpOutput,
   SignInInput,
   SignInOutput,
-} from '@/core/user/types';
+} from '@core/user/types';
 
 const payloadInputSignUp: SignUpInput = {
   name: 'Jose da Silva',

@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import { IAAdapter } from './adapter';
-import { ILoggerAdapter } from '@/infra/logger';
-import { ISecretsAdapter } from '@/infra/secrets';
+import { ILoggerAdapter } from '@infra/logger';
+import { ISecretsAdapter } from '@infra/secrets';
 import { ChatCompletionMessageParam } from 'openai/resources';
 
 export class IAService implements IAAdapter {

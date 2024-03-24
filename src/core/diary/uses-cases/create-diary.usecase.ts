@@ -1,17 +1,17 @@
-import { IUserRepository } from '@/core/user/user.repository';
+import { IUserRepository } from '@core/user/user.repository';
 import { IDiaryRepository } from '../diary.repository';
-import { ILoggerAdapter } from '@/infra/logger';
-import { ValidateSchema } from '@/utils/validators/validate-schema.decorator';
+import { ILoggerAdapter } from '@infra/logger';
+import { ValidateSchema } from '@utils/validators/validate-schema.decorator';
 import {
   Diary,
   DiaryCreateInput,
   DiaryCreateOutput,
   diaryCreateInputSchema,
 } from '../types';
-import { ApiBadRequestException } from '@/utils/exception';
+import { ApiBadRequestException } from '@utils/exception';
 import { DiaryEntity } from '../diary.entity';
-import { ICryptoAdapter } from '@/libs/crypto';
-import { UserEntity } from '@/core/user/user.entity';
+import { ICryptoAdapter } from '@libs/crypto';
+import { UserEntity } from '@core/user/user.entity';
 export class CreateDiaryUseCase {
   private readonly diaryRepository: IDiaryRepository;
   private readonly userRepository: IUserRepository;

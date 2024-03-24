@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ISecretsAdapter, SecretsModule } from '@/infra/secrets';
-import { ILoggerAdapter, LoggerModule } from '@/infra/logger';
+import { ISecretsAdapter, SecretsModule } from '@infra/secrets';
+import { ILoggerAdapter, LoggerModule } from '@infra/logger';
 import { IAAdapter } from './adapter';
 import { IAService } from './service';
 

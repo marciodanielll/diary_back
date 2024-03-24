@@ -30,11 +30,14 @@ export const signInSchema = signUpSchema
 
 export type SingUp = z.infer<typeof signUpSchema>;
 
+////////////////////////////////
 export type SignUpInput = Pick<SingUp, 'name' | 'email' | 'password'>;
 export type SignUpOutput = { token: string; id: string };
 
+////////////////////////////////
 export type SignInInput = Pick<SingUp, 'email' | 'password'>;
 export type SignInOutput = { token: string; name: string };
 
+////////////////////////////////
 export const userSchema = signUpSchema;
 export type User = SingUp;

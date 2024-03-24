@@ -1,5 +1,5 @@
-import { ILoggerAdapter } from '@/infra/logger';
-import { ITokenAdapter } from '@/libs/token/adapter';
+import { ILoggerAdapter } from '@infra/logger';
+import { ITokenAdapter } from '@libs/token';
 import {
   CanActivate,
   ExecutionContext,

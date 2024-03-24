@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { SecretsService } from '../infra/secrets/service';
+import { SecretsService } from '@infra/secrets';
 import { ConfigService } from '@nestjs/config';
 
 type GetDateWithFormatFormatInput = {

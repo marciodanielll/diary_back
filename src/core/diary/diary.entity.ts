@@ -1,5 +1,5 @@
 import { diarySchema, Diary } from './types';
-import { BaseEntity, IEntity } from '@/utils/entity';
+import { BaseEntity, IEntity } from '@utils/entity';
 
 export class DiaryEntity
   extends BaseEntity<Diary>(diarySchema)

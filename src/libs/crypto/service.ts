@@ -1,8 +1,8 @@
 import { EncryptedText, encodingsTuple } from './types';
-import { ISecretsAdapter } from '@/infra/secrets';
+import { ISecretsAdapter } from '@infra/secrets';
 import { ICryptoAdapter } from './adapter';
 import bcrypt from 'bcrypt';
-import { ILoggerAdapter } from '@/infra/logger';
+import { ILoggerAdapter } from '@infra/logger';
 import crypto from 'crypto';
 
 export class CryptoService implements ICryptoAdapter {
