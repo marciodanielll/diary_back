@@ -8,12 +8,18 @@ import { name } from '../package.json';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import express from 'express';
 
 (async () => {
   const app = await NestFactory.create(AppModule, {
-    cors: true,
+    cors: {
+      origin: '*',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    },
     logger: ['error'],
   });
+
+  app.use(express.json());
 
   app.use(helmet());
 
@@ -37,14 +43,15 @@ import rateLimit from 'express-rate-limit';
   const configSwagger = new DocumentBuilder()
     .setTitle(name)
     .setVersion('1.0')
-    .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-      'access-token',
-    )
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, configSwagger);
-  SwaggerModule.setup('doc', app, document);
+  SwaggerModule.setup('doc', app, document, {
+    swaggerOptions: {
+      security: [{ bearer: [] }],
+    },
+  });
 
   await app.listen(PORT, () => {
     logger.log(`Server is running on port ${PORT}`);

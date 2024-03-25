@@ -10,13 +10,14 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ICreateDiaryCaseAdapter } from './adapter';
 import { DiaryCreateInput } from '@core/diary/types';
 import { AuthGuard } from '@utils/guards/auth.guard';
 
 @Controller('diary')
 @ApiTags('diary')
+@ApiBearerAuth()
 export class DiaryController {
   private readonly logger: ILoggerAdapter;
   private readonly context = DiaryController.name;

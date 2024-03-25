@@ -5,10 +5,12 @@ import { TokenModule } from './libs/token/module';
 import { IAModule } from './libs/ia';
 import { UserModule } from './modules/user/module';
 import { DiaryModule } from './modules/diary/module';
+import { LoggerModule } from '@infra/logger';
 
 @Module({
   imports: [
     InfraModule,
+    LoggerModule,
     UserModule,
     CryptoModule,
     TokenModule,
@@ -16,6 +18,5 @@ import { DiaryModule } from './modules/diary/module';
     DiaryModule,
   ],
   controllers: [],
-  providers: [],
 })
 export class AppModule {}

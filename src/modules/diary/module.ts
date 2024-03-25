@@ -12,6 +12,7 @@ import { UserRepositoryProviderModule } from '../user/provider';
 import { UserSchema } from '@infra/database/postgres-type-orm/schemas/user.schema';
 import { CryptoModule, ICryptoAdapter } from '@libs/crypto';
 import { TokenModule } from '@libs/token/module';
+
 @Module({
   imports: [
     LoggerModule,
